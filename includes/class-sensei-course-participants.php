@@ -98,7 +98,45 @@ class Sensei_Course_Participants {
 		// Handle localisation
 		$this->load_plugin_textdomain ();
 		add_action( 'init', array( $this, 'load_localisation' ), 0 );
+
+		// Display course participants on course loop and single course
+		add_action( 'sensei_course_meta', array( $this, 'display_course_participant_count' ), 5 );
+		add_action( 'sensei_course_archive_course_title', array( $this, 'display_course_participant_count' ), 15, 1 );
+
+		// Include Widget
+		add_action( 'widgets_init', array( $this, 'include_widgets' ) );
 	} // End __construct()
+
+	/**
+	 * Display course participants on course loop and single course
+	 * @access  public
+	 * @since   1.0.0
+	 * @return void
+	 */
+	public function display_course_participant_count( $post_item ) {
+		global $woothemes_sensei, $post;
+
+		$post_id = 0;
+
+		if( is_singular( 'course' ) ) {
+			$post_id = $post->ID;
+		} else if( isset( $post_item ) ) {
+			$post_id = absint( $post_item->ID );
+		}
+
+		// Get the number of learners taking this course
+		$course_learners = WooThemes_Sensei_Utils::sensei_check_for_activity( array( 'post_id' => $post_id, 'type' => 'sensei_course_start' ), true );
+		$course_learners = intval( count( $course_learners ) );
+		echo '<p class="sensei-course-participants"><strong>' . $course_learners . '</strong> ' . __( 'learners taking this course', 'sensei-course-participants' ) . '</p>';
+	}
+
+	/**
+	 * Include widgets
+	 */
+	public function include_widgets() {
+		include_once( 'class-sensei-course-participants-widget.php' );
+		register_widget( 'Sensei_Course_Participants_Widget' );
+	}
 
 	/**
 	 * Load frontend CSS.
@@ -109,7 +147,7 @@ class Sensei_Course_Participants {
 	public function enqueue_styles () {
 		global $woothemes_sensei;
 
-		wp_register_style( $this->_token . '-frontend', esc_url( $this->assets_url ) . 'css/frontend.css', array( $woothemes_sensei->token . '-frontend' ), $this->_version );
+		wp_register_style( $this->_token . '-frontend', esc_url( $this->assets_url ) . 'css/frontend.css', $this->_version );
 		wp_enqueue_style( $this->_token . '-frontend' );
 	} // End enqueue_styles()
 
