@@ -71,7 +71,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 		}
 
 		$course_id = $this->get_course_id();
-		$learners = $this->get_course_learners( $limit, $order, $orderby );
+		$learners = $this->get_course_learners( $order, $orderby );
 		$public_profiles = false;
 		if( isset( $woothemes_sensei->settings->settings[ 'learner_profile_enable' ] ) && $woothemes_sensei->settings->settings[ 'learner_profile_enable' ] ) {
 			$public_profiles = true;
@@ -92,11 +92,14 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 
 			<ul class="sensei-course-participants-list">
 
-				<?php foreach ($learners as $learner ) { 
+				<?php $i = 0;
+				foreach ($learners as $learner ) { 
+					$i++;
+					$display = $i <= $limit ? 'show' : 'hide';
 					$gravatar_email = $learner->user_email; 
 					?>
 
-					<li class="sensei-course-participant fix">
+					<li class="sensei-course-participant fix <?php echo $display; ?>">
 						<?php if( true == $public_profiles ) {
 							$profile_url = esc_url( $woothemes_sensei->learner_profiles->get_permalink( $learner->ID ) ); 
 							echo '<a href="' . $profile_url . '" title="' . __( 'View public learner profile', 'sensei-course-participants' ) . '"><figure itemprop="image">' . get_avatar( $gravatar_email, $size ) . '</figure></a>';
@@ -109,6 +112,16 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 
 				<?php } ?>
 			</ul>
+
+
+			<?php // Display a view all link if not all learners are displayed.
+			if( $limit < count( $learners ) ) { ?>
+
+			<div class="sensei-view-all-participants">
+				<a href="#">View all</a>
+			</div>
+
+			<?php } ?>
 
 		<?php } ?>
 
@@ -232,30 +245,22 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 	 * @param  string 	$orderby 	How to determine the order of learners
 	 * @return array 	$learners 	The array of learners
 	 */
-	protected function get_course_learners ( $limit, $order, $orderby ) {
+	protected function get_course_learners ( $order, $orderby ) {
 		$user_ids = WooThemes_Sensei_Utils::sensei_activity_ids( array( 'post_id' => intval( $this->get_course_id() ), 'type' => 'sensei_course_start', 'field' => 'user_id', ) );
-
-		if( $limit > count( $user_ids ) ) {
-			$limit = count( $user_ids );
-		}
-		
-		// Get a random selection of the users if orderby is random
-		if ( isset( $orderby ) && 'rand' == $orderby ) {
-			$user_id_selection = array_rand( $user_ids, $limit );
-			$result = array();
-			foreach( $user_id_selection as $k ) {
-			  $result[] = $user_ids[$k];
-			}
-			$user_ids = $result;
-			$orderwas = 'rand';
-			$orderby = 'user_registered';
-		}
+		$total = count( $user_ids );
 
 		// Don't run the query if there are no users taking this course.
 		if ( empty($user_ids) ) return false;
 
+		// 'rand' can't be used in WP_User_Query, so save the setting and change it to 'user_registered'
+		// We can randomize the array after running the query
+		if ( isset( $orderby ) && 'rand' == $orderby ) {
+			$orderwas = 'rand';
+			$orderby = 'user_registered';
+		}
+
 		$args_array = array(
-			'number' => $limit,
+			'number' => $total,
 			'include' => $user_ids,
 			'orderby' => $orderby,
 			'order' => $order,
