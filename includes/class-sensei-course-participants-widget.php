@@ -84,48 +84,67 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 		if ( $title ) { echo $before_title . $title . $after_title; }
 
 		// Add actions for plugins/themes to hook onto.
-		do_action( $this->woo_widget_cssclass . '_top' ); ?>
+		do_action( $this->woo_widget_cssclass . '_top' ); 
 
-		<?php if( false === $learners ) {
-			echo '<p>' . __( 'There are no other learners currently taking this course. Be the first!', 'sensei-course-participants' ) . '</p>';
-		} else { ?>
+		$html = '';
+		if( false === $learners ) {
+			$html .= '<p>' . __( 'There are no other learners currently taking this course. Be the first!', 'sensei-course-participants' ) . '</p>';
+		} else {
 
-			<ul class="sensei-course-participants-list">
+			$html .= '<ul class="sensei-course-participants-list">';
 
-				<?php $i = 0;
-				foreach ($learners as $learner ) { 
-					$i++;
-					$display = $i <= $limit ? 'show' : 'hide';
-					$gravatar_email = $learner->user_email; 
-					?>
+			// Begin templating logic.
+			$tpl = '<li class="sensei-course-participant fix %%CLASS%%">%%IMAGE%%<h3 itemprop="name" class="learner-name">%%TITLE%%</h3></li>';
+			$tpl = apply_filters( 'senseni_course_participants_template', $tpl );
 
-					<li class="sensei-course-participant fix <?php echo $display; ?>">
-						<?php if( true == $public_profiles ) {
-							$profile_url = esc_url( $woothemes_sensei->learner_profiles->get_permalink( $learner->ID ) ); 
-							echo '<a href="' . $profile_url . '" title="' . __( 'View public learner profile', 'sensei-course-participants' ) . '"><figure itemprop="image">' . get_avatar( $gravatar_email, $size ) . '</figure></a>';
-							echo '<h3 itemprop="name" class="learner-name"><a href="' . $profile_url . '" title="' . __( 'View public learner profile', 'sensei-course-participants' ) . '">' . $learner->display_name . '</a></h3>';
-						} else {
-							echo '<figure itemprop="image">' . get_avatar( $gravatar_email, $size ) . '</figure>'; 
-							echo '<h3 itemprop="name" class="learner-name">' . $learner->display_name . '</h3>';
-						} ?>
-					</li>
+			$i = 0;
+			foreach ($learners as $learner ) { 
+				$template = $tpl;
+				$i++;
+				$class = $i <= $limit ? 'show' : 'hide';
+				$gravatar_email = $learner->user_email;
+				$image = '<figure itemprop="image">' . get_avatar( $gravatar_email, $size ) . '</figure>';
+				$title = '<h3 itemprop="name" class="learner-name">' . $learner->display_name . '</h3>';
+				
+				if( true == $public_profiles ) {
+					$profile_url = esc_url( $woothemes_sensei->learner_profiles->get_permalink( $learner->ID ) ); 
+					$link = '<a href="' . $profile_url . '" title="' . __( 'View public learner profile', 'sensei-course-participants' ) . '">';
+					$image = $link . $image . '</a>';
+					$title = $link . $title . '</a>';
+				}
 
-				<?php } ?>
-			</ul>
+				$template = str_replace( '%%CLASS%%', $class, $template );
+				$template = str_replace( '%%IMAGE%%', $image, $template );
+				$template = str_replace( '%%TITLE%%', $title, $template );
+
+				$html .= $template;
+
+				/* <li class="sensei-course-participant fix <?php echo $display; ?>">
+					<?php if( true == $public_profiles ) {
+						$profile_url = esc_url( $woothemes_sensei->learner_profiles->get_permalink( $learner->ID ) ); 
+						echo '<a href="' . $profile_url . '" title="' . __( 'View public learner profile', 'sensei-course-participants' ) . '"><figure itemprop="image">' . get_avatar( $gravatar_email, $size ) . '</figure></a>';
+						echo '<h3 itemprop="name" class="learner-name"><a href="' . $profile_url . '" title="' . __( 'View public learner profile', 'sensei-course-participants' ) . '">' . $learner->display_name . '</a></h3>';
+					} else {
+						echo '<figure itemprop="image">' . get_avatar( $gravatar_email, $size ) . '</figure>'; 
+						echo '<h3 itemprop="name" class="learner-name">' . $learner->display_name . '</h3>';
+					} ?>
+				</li> */
+
+			}
+			$html .= '</ul>';
 
 
-			<?php // Display a view all link if not all learners are displayed.
-			if( $limit < count( $learners ) ) { ?>
+			// Display a view all link if not all learners are displayed.
+			if( $limit < count( $learners ) ) {
 
-			<div class="sensei-view-all-participants">
-				<a href="#">View all</a>
-			</div>
+			$html .= '<div class="sensei-view-all-participants"><a href="#">View all</a></div>';
 
-			<?php } ?>
+			}
 
-		<?php } ?>
+		}
 
-		<?php 
+		echo $html;
+
 		// Add actions for plugins/themes to hook onto.
 		do_action( $this->woo_widget_cssclass . '_bottom' );
 		
