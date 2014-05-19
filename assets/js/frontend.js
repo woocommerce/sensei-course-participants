@@ -1,9 +1,10 @@
-jQuery( document ).ready( function ( e ) {
+jQuery( document ).ready( function () {
 	jQuery('.sensei-view-all-participants a').click( function( event ) {
 		event.preventDefault();
-		var hiddenLearners = '.sensei-course-participant.hide';
-		var txt = jQuery( hiddenLearners ).is(':visible') ? 'View All' : 'Close';
-     	jQuery(this).text(txt);
-		jQuery( hiddenLearners ).slideToggle( 300 );
+		var el = jQuery(this);
+		var hiddenLearners = el.closest('.widget_sensei_course_participants').find('.sensei-course-participant.hide');
+		var txt = hiddenLearners.is(':visible') ? 'View All' : 'Close';
+		jQuery(this).text(txt);
+		hiddenLearners.slideToggle( 300 );
 	});
 });
