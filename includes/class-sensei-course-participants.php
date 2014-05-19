@@ -91,10 +91,6 @@ class Sensei_Course_Participants {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ), 10 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 10 );
 
-		// Load admin JS & CSS
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 10, 1 );
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_styles' ), 10, 1 );
-
 		// Handle localisation
 		$this->load_plugin_textdomain ();
 		add_action( 'init', array( $this, 'load_localisation' ), 0 );
@@ -163,28 +159,6 @@ class Sensei_Course_Participants {
 		wp_register_script( $this->_token . '-frontend', esc_url( $this->assets_url ) . 'js/frontend' . $this->script_suffix . '.js', array( 'jquery' ), $this->_version );
 		wp_enqueue_script( $this->_token . '-frontend' );
 	} // End enqueue_scripts()
-
-	/**
-	 * Load admin CSS.
-	 * @access  public
-	 * @since   1.0.0
-	 * @return void
-	 */
-	public function admin_enqueue_styles ( $hook = '' ) {
-		wp_register_style( $this->_token . '-admin', esc_url( $this->assets_url ) . 'css/admin.css', array(), $this->_version );
-		wp_enqueue_style( $this->_token . '-admin' );
-	} // End admin_enqueue_styles()
-
-	/**
-	 * Load admin Javascript.
-	 * @access  public
-	 * @since   1.0.0
-	 * @return void
-	 */
-	public function admin_enqueue_scripts ( $hook = '' ) {
-		wp_register_script( $this->_token . '-admin', esc_url( $this->assets_url ) . 'js/admin' . $this->script_suffix . '.js', array( 'jquery' ), $this->_version );
-		wp_enqueue_script( $this->_token . '-admin' );
-	} // End admin_enqueue_scripts()
 
 	/**
 	 * Load plugin localisation.
