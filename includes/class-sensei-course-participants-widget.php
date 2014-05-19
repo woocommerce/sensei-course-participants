@@ -70,8 +70,8 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 			$order = $instance['order'];
 		}
 
-		$course_id = $this->get_course_id();
-		$learners = $this->get_course_learners( $order, $orderby );
+		$course_id = Sensei_Course_Participants()->get_course_id();
+		$learners = Sensei_Course_Participants()->get_course_learners( $order, $orderby );
 		$public_profiles = false;
 		if( isset( $woothemes_sensei->settings->settings[ 'learner_profile_enable' ] ) && $woothemes_sensei->settings->settings[ 'learner_profile_enable' ] ) {
 			$public_profiles = true;
@@ -219,72 +219,6 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 
 <?php
 	} // End form()
-
-	/**
-	 * Get the id of the course being viewed from a course, module, lesson or quiz page.
-	 * @since  1.0.0
-	 * @return Integer 	The course ID
-	 */
-	protected function get_course_id () {
-		global $woothemes_sensei, $post;
-
-		$course_id = 0;
-
-		if( is_singular( 'lesson' ) || is_singular( 'quiz' ) ) {
-			$course_id = get_post_meta( $post->ID, '_lesson_course', true );
-		} elseif ( is_singular( 'course' ) ) {
-			$course_id = $post->ID;
-		} elseif ( is_tax( 'module' ) ) {
-			// Find the course ID for the current module from the GET variable
-			if ( isset( $_GET['course_id'] ) && 0 < intval( $_GET['course_id'] ) ) {
-    			$course_id = intval( $_GET['course_id'] );
-    		}
-		}
-
-		$course_id = intval( $course_id );
-		return $course_id;
-	} // End get_course_id()
-
-	/**
-	 * Get an array of learners taking the course
-	 * @since  1.0.0
-	 * @param  integer 	$limit 		Number of users to display
-	 * @param  string 	$order 		Order direction
-	 * @param  string 	$orderby 	How to determine the order of learners
-	 * @return array 	$learners 	The array of learners
-	 */
-	protected function get_course_learners ( $order, $orderby ) {
-		$user_ids = WooThemes_Sensei_Utils::sensei_activity_ids( array( 'post_id' => intval( $this->get_course_id() ), 'type' => 'sensei_course_start', 'field' => 'user_id', ) );
-		$total = count( $user_ids );
-
-		// Don't run the query if there are no users taking this course.
-		if ( empty($user_ids) ) return false;
-
-		// 'rand' can't be used in WP_User_Query, so save the setting and change it to 'user_registered'
-		// We can randomize the array after running the query
-		if ( isset( $orderby ) && 'rand' == $orderby ) {
-			$orderwas = 'rand';
-			$orderby = 'user_registered';
-		}
-
-		$args_array = array(
-			'number' => $total,
-			'include' => $user_ids,
-			'orderby' => $orderby,
-			'order' => $order,
-			'fields' => 'all_with_meta'
-		);
-
-		$learners_search = new WP_User_Query( $args_array );
-		$learners = $learners_search->get_results();
-
-		// Shuffle the learners if the selected order was random
-		if( 'rand' == $orderwas ) {
-			shuffle( $learners );
-		}
-
-		return $learners;
-	} // End get_course_learners()
 
 	/**
 	 * Get an array of the available orderby options.
