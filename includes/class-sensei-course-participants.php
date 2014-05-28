@@ -173,7 +173,7 @@ class Sensei_Course_Participants {
 		$learners = $learners_search->get_results();
 
 		// Shuffle the learners if the selected order was random
-		if( 'rand' == $orderwas ) {
+		if( isset( $orderwas ) && 'rand' == $orderwas ) {
 			shuffle( $learners );
 		}
 
