@@ -104,7 +104,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 				$class = $i <= $limit ? 'show' : 'hide';
 				$gravatar_email = $learner->user_email;
 				$image = '<figure itemprop="image">' . get_avatar( $gravatar_email, $size ) . '</figure>';
-				$title = '<h3 itemprop="name" class="learner-name">' . $learner->display_name . '</h3>';
+				$title = '<h4 itemprop="name" class="learner-name">' . $learner->display_name . '</h4>';
 				
 				if( true == $public_profiles ) {
 					$profile_url = esc_url( $woothemes_sensei->learner_profiles->get_permalink( $learner->ID ) ); 
