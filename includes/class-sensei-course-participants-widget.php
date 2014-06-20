@@ -48,7 +48,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 	public function widget( $args, $instance ) {
 
 		extract( $args );
-		
+
 		global $woothemes_sensei, $post, $current_user, $view_lesson, $user_taking_course;
 
 		if ( !( is_singular( 'course' ) || is_singular( 'lesson' ) || is_singular( 'quiz' ) || is_tax( 'module' ) ) ) return;
@@ -63,6 +63,9 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 			$size = intval( $instance['size'] );
 		}
 		// Select boxes.
+		if ( isset( $instance['display'] ) && in_array( $instance['display'], array_keys( $this->get_display_options() ) ) ) {
+			$display = $instance['display'];
+		}
 		if ( isset( $instance['orderby'] ) && in_array( $instance['orderby'], array_keys( $this->get_orderby_options() ) ) ) {
 			$orderby = $instance['orderby'];
 		}
@@ -84,38 +87,42 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 		if ( $title ) { echo $before_title . $title . $after_title; }
 
 		// Add actions for plugins/themes to hook onto.
-		do_action( $this->woo_widget_cssclass . '_top' ); 
+		do_action( $this->woo_widget_cssclass . '_top' );
 
 		$html = '';
 		if( false === $learners ) {
 			$html .= '<p>' . __( 'There are no other learners currently taking this course. Be the first!', 'sensei-course-participants' ) . '</p>';
 		} else {
 
-			$html .= '<ul class="sensei-course-participants-list">';
+			$list_class = 'grid' == $display ? 'grid' : 'list';
+			$html .= '<ul class="sensei-course-participants-list' . ' ' . $list_class . '">';
 
 			// Begin templating logic.
-			$tpl = '<li class="sensei-course-participant fix %%CLASS%%">%%IMAGE%%<h3 itemprop="name" class="learner-name">%%TITLE%%</h3></li>';
+			$tpl = '<li class="sensei-course-participant fix %%CLASS%%">%%IMAGE%%%%TITLE%%</li>';
 			$tpl = apply_filters( 'sensei_course_participants_template', $tpl );
 
 			$i = 0;
-			foreach ($learners as $learner ) { 
+			foreach ($learners as $learner ) {
 				$template = $tpl;
 				$i++;
 				$class = $i <= $limit ? 'show' : 'hide';
 				$gravatar_email = $learner->user_email;
 				$image = '<figure itemprop="image">' . get_avatar( $gravatar_email, $size ) . '</figure>';
-				$title = '<h4 itemprop="name" class="learner-name">' . $learner->display_name . '</h4>';
-				
+				$learner_name = '';
+				if ( 'list' == $display ) {
+					$learner_name = '<h3 itemprop="name" class="learner-name">' . $learner->display_name . '</h3>';
+				}
+
 				if( true == $public_profiles ) {
-					$profile_url = esc_url( $woothemes_sensei->learner_profiles->get_permalink( $learner->ID ) ); 
+					$profile_url = esc_url( $woothemes_sensei->learner_profiles->get_permalink( $learner->ID ) );
 					$link = '<a href="' . $profile_url . '" title="' . __( 'View public learner profile', 'sensei-course-participants' ) . '">';
 					$image = $link . $image . '</a>';
-					$title = $link . $title . '</a>';
+					$learner_name = $link . $learner_name . '</a>';
 				}
 
 				$template = str_replace( '%%CLASS%%', $class, $template );
 				$template = str_replace( '%%IMAGE%%', $image, $template );
-				$template = str_replace( '%%TITLE%%', $title, $template );
+				$template = str_replace( '%%TITLE%%', $learner_name, $template );	
 
 				$html .= $template;
 
@@ -136,7 +143,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 
 		// Add actions for plugins/themes to hook onto.
 		do_action( $this->woo_widget_cssclass . '_bottom' );
-		
+
 		echo $after_widget;
 	} // End widget()
 
@@ -158,6 +165,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 		/* The select box is returning a text value, so we escape it. */
 		$instance['orderby'] = esc_attr( $new_instance['orderby'] );
 		$instance['order'] = esc_attr( $new_instance['order'] );
+		$instance['display'] = esc_attr( $new_instance['display'] );
 
 		return $instance;
 	} // End update()
@@ -179,6 +187,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 						'size' => 50,
 						'orderby' => 'user_registered',
 						'order' => 'ASC',
+						'display' => 'list'
 					);
 
 		$instance = wp_parse_args( (array) $instance, $defaults );
@@ -216,6 +225,15 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 			<?php } ?>
 			</select>
 		</p>
+		<!-- Widget Display: Select Input -->
+		<p>
+			<label for="<?php echo $this->get_field_id( 'display' ); ?>"><?php _e( 'Display:', 'sensei-course-participants' ); ?></label>
+			<select name="<?php echo $this->get_field_name( 'display' ); ?>" class="widefat" id="<?php echo $this->get_field_id( 'display' ); ?>">
+			<?php foreach ( $this->get_display_options() as $k => $v ) { ?>
+				<option value="<?php echo $k; ?>"<?php selected( $instance['display'], $k ); ?>><?php echo $v; ?></option>
+			<?php } ?>
+			</select>
+		</p>
 
 <?php
 	} // End form()
@@ -244,4 +262,16 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 					'DESC' 			=> __( 'Descending', 'sensei-course-participants' )
 					);
 	} // End get_order_options()
+
+	/**
+	 * Get an array of the available display options.
+	 * @since  1.0.0
+	 * @return array
+	 */
+	protected function get_display_options () {
+		return array(
+					'list' 			=> __( 'List', 'sensei-course-participants' ),
+					'grid' 			=> __( 'Grid', 'sensei-course-participants' )
+					);
+	} // End get_display_options()
 }

@@ -16,6 +16,12 @@
 				display: none;
 			}
 		}
+		&.grid {
+			.sensei-course-participant {
+				clear: none;
+				float: left;
+			}
+		}
 	}
 	.sensei-view-all-participants {
 		text-align: center;
