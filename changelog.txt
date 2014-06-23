@@ -1,4 +1,4 @@
 *** Sensei Course Participants Changelog ***
 
-2014.05.19 - version 1.0.0
+2014.06.23 - version 1.0.0
 * First release
