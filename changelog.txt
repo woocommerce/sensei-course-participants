@@ -1,4 +1,7 @@
 *** Sensei Course Participants Changelog ***
 
+2015.02.01 - version 1.0.1
+ * Tweak - Updating code for Sensei 1.7 compatibility
+
 2014.06.23 - version 1.0.0
-* First release
+ * First release

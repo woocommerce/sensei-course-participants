@@ -122,7 +122,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 
 				$template = str_replace( '%%CLASS%%', $class, $template );
 				$template = str_replace( '%%IMAGE%%', $image, $template );
-				$template = str_replace( '%%TITLE%%', $learner_name, $template );	
+				$template = str_replace( '%%TITLE%%', $learner_name, $template );
 
 				$html .= $template;
 
