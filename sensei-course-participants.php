@@ -55,7 +55,7 @@ if( is_sensei_active() ) {
 	 * @return object Sensei_Course_Participants
 	 */
 	function Sensei_Course_Participants() {
-		return Sensei_Course_Participants::instance( __FILE__, '1.0.0' );
+		return Sensei_Course_Participants::instance( __FILE__, '1.0.1' );
 	}
 
 	Sensei_Course_Participants();
