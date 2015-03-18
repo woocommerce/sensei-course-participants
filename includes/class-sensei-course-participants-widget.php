@@ -46,7 +46,6 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 	 * @return void
 	 */
 	public function widget( $args, $instance ) {
-
 		extract( $args );
 
 		global $woothemes_sensei, $post, $current_user, $view_lesson, $user_taking_course;
@@ -107,10 +106,14 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 				$i++;
 				$class = $i <= $limit ? 'show' : 'hide';
 				$gravatar_email = $learner->user_email;
-				$image = '<figure itemprop="image">' . get_avatar( $gravatar_email, $size ) . '</figure>';
+				$image = '<figure itemprop="image">' . get_avatar( $gravatar_email, $size ) . '</figure>' . "\n";
 				$learner_name = '';
+				$display_name = $learner->display_name;
+				if ( $current_user->__get( 'id' ) == $learner->__get( 'id' ) ) {
+					$display_name = __( 'You', 'sensei-course-participants' );
+				}
 				if ( 'list' == $display ) {
-					$learner_name = '<h3 itemprop="name" class="learner-name">' . $learner->display_name . '</h3>';
+					$learner_name = '<h3 itemprop="name" class="learner-name">' . esc_html( $display_name ) . '</h3>' . "\n";
 				}
 
 				if( true == $public_profiles ) {
