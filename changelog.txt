@@ -1,5 +1,9 @@
 *** Sensei Course Participants Changelog ***
 
+2015.03.18 - version 1.1.0
+ * Tweak - Display "You" instead of the current learner's display name in the widget.
+ * Tweak - Display "learner" or "learners" intelligently when displaying the course participant count on course archive screens.
+
 2015.02.01 - version 1.0.1
  * Tweak - Updating code for Sensei 1.7 compatibility
 
