@@ -170,6 +170,9 @@ class Sensei_Course_Participants {
 		);
 
 		$users = WooThemes_Sensei_Utils::sensei_check_for_activity( $activity_args, true );
+		if ( !is_array($users) ) {
+			$users = array( $users );
+		}
 		$total = count( $users );
 
 		// Don't run the query if there are no users taking this course.
