@@ -133,7 +133,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 			// Display a view all link if not all learners are displayed.
 			if( $limit < count( $learners ) ) {
 
-				$html .= '<div class="sensei-view-all-participants"><a href="#">View all</a></div>';
+				$html .= '<div class="sensei-view-all-participants"><a href="#">' . __( 'View all', 'sensei-course-participants' ) . '</a></div>';
 
 			}
 
