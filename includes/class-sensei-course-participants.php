@@ -122,7 +122,7 @@ class Sensei_Course_Participants {
 
 		$learner_count = $this->get_course_participant_count( $post_id );
 
-		echo '<p class="sensei-course-participants"><strong>' . $learner_count . '</strong> ' . __( 'learners taking this course', 'sensei-course-participants' ) . '</p>';
+		echo '<p class="sensei-course-participants">' . sprintf( __( '%s %s taking this course', 'sensei-course-participants' ), '<strong>' . intval( $learner_count ) . '</strong>', _n( 'learner', 'learners', intval( $learner_count ), 'sensei-course-participants' ) ) . '</p>' . "\n";
 	}
 
 	/**
