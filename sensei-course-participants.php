@@ -8,6 +8,8 @@
  * Author URI: http://www.woothemes.com/
  * Requires at least: 3.8
  * Tested up to: 4.1
+ * Text Domain: sensei-course-participants
+ * Domain Path: /languages/
  *
  * @package WordPress
  * @author WooThemes
