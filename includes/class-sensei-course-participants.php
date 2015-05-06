@@ -274,7 +274,7 @@ class Sensei_Course_Participants {
 	 * @return void
 	 */
 	public function load_localisation () {
-		load_plugin_textdomain( 'sensei-course-participants' , false , dirname( plugin_basename( $this->file ) ) . '/lang/' );
+		load_plugin_textdomain( 'sensei-course-participants' , false , dirname( plugin_basename( $this->file ) ) . '/languages/' );
 	} // End load_localisation()
 
 	/**
@@ -289,7 +289,7 @@ class Sensei_Course_Participants {
 	    $locale = apply_filters( 'plugin_locale' , get_locale() , $domain );
 
 	    load_textdomain( $domain , WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
-	    load_plugin_textdomain( $domain , FALSE , dirname( plugin_basename( $this->file ) ) . '/lang/' );
+	    load_plugin_textdomain( $domain , FALSE , dirname( plugin_basename( $this->file ) ) . '/languages/' );
 	} // End load_plugin_textdomain
 
 	/**
