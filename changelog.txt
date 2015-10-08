@@ -1,5 +1,9 @@
 *** Sensei Course Participants Changelog ***
 
+2015.10.08 - version 1.1.2
+ * Fix - Fixes a PHP notice
+ * Fix - Updates widget constructor due to a change in WordPress
+
 2015.05.06 - version 1.1.1
  * Fix - Fixes an issue with a single course participant not showing correctly.
  * Fix - Updates .pot file to ensure all strings are included.
