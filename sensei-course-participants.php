@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Sensei Course Participants
- * Version: 1.1.1
+ * Version: 1.1.2
  * Plugin URI: http://www.woothemes.com/products/sensei-course-participants/
  * Description: Displays the number of learners taking a course, and a widget with a list of those learners.
  * Author: WooThemes
