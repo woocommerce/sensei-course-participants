@@ -109,7 +109,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 				$image = '<figure itemprop="image">' . get_avatar( $gravatar_email, $size ) . '</figure>' . "\n";
 				$learner_name = '';
 				$display_name = $learner->display_name;
-				if ( $current_user->__get( 'ID' ) == $learner->__get( 'ID' ) ) {
+				if ( get_current_user_id() == $learner->__get( 'ID' ) ) {
 					$display_name = __( 'You', 'sensei-course-participants' );
 				}
 				if ( 'list' == $display ) {
