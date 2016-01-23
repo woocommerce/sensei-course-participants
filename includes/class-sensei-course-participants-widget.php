@@ -49,7 +49,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 
 		extract( $args );
 
-		global $woothemes_sensei, $post, $current_user, $view_lesson, $user_taking_course;
+		global $post, $current_user, $pre_requisite_complete, $user_taking_course;
 
 		if ( !( is_singular( 'course' ) || is_singular( 'lesson' ) || is_singular( 'quiz' ) || is_tax( 'module' ) ) ) return;
 
@@ -76,7 +76,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 		$course_id = Sensei_Course_Participants()->get_course_id();
 		$learners = Sensei_Course_Participants()->get_course_learners( $order, $orderby );
 		$public_profiles = false;
-		if( isset( $woothemes_sensei->settings->settings[ 'learner_profile_enable' ] ) && $woothemes_sensei->settings->settings[ 'learner_profile_enable' ] ) {
+		if( isset( Sensei()->settings->settings[ 'learner_profile_enable' ] ) && Sensei()->settings->settings[ 'learner_profile_enable' ] ) {
 			$public_profiles = true;
 		}
 
@@ -114,7 +114,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 				}
 
 				if( true == $public_profiles ) {
-					$profile_url = esc_url( $woothemes_sensei->learner_profiles->get_permalink( $learner->ID ) );
+					$profile_url = esc_url( Sensei()->learner_profiles->get_permalink( $learner->ID ) );
 					$link = '<a href="' . $profile_url . '" title="' . __( 'View public learner profile', 'sensei-course-participants' ) . '">';
 					$image = $link . $image . '</a>';
 					$learner_name = $link . $learner_name . '</a>';

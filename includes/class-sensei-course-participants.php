@@ -110,7 +110,7 @@ class Sensei_Course_Participants {
 	 * @return void
 	 */
 	public function display_course_participant_count( $post_item = null ) {
-		global $woothemes_sensei, $post;
+		global $post;
 
 		$post_id = 0;
 
@@ -133,7 +133,7 @@ class Sensei_Course_Participants {
 	 */
 	public function get_course_participant_count( $post_id ) {
 		// Get the number of learners taking this course
-		$course_learners = WooThemes_Sensei_Utils::sensei_check_for_activity( array( 'post_id' => $post_id, 'type' => 'sensei_course_start' ), true );
+		$course_learners = Sensei_Utils::sensei_check_for_activity( array( 'post_id' => $post_id, 'type' => 'sensei_course_start' ), true );
 		$course_learners = intval( count( $course_learners ) );
 
 		return $course_learners;
@@ -148,7 +148,7 @@ class Sensei_Course_Participants {
 	 * @return array 	$learners 	The array of learners
 	 */
 	public function get_course_learners ( $order, $orderby ) {
-		$user_ids = WooThemes_Sensei_Utils::sensei_activity_ids( array( 'post_id' => intval( $this->get_course_id() ), 'type' => 'sensei_course_start', 'field' => 'user_id', ) );
+		$user_ids = Sensei_Utils::sensei_activity_ids( array( 'post_id' => intval( $this->get_course_id() ), 'type' => 'sensei_course_start', 'field' => 'user_id', ) );
 		$total = count( $user_ids );
 
 		// Don't run the query if there are no users taking this course.
@@ -186,7 +186,7 @@ class Sensei_Course_Participants {
 	 * @return Integer 	The course ID
 	 */
 	public function get_course_id () {
-		global $woothemes_sensei, $post;
+		global $post;
 
 		$course_id = 0;
 
@@ -220,10 +220,10 @@ class Sensei_Course_Participants {
 	 * @return void
 	 */
 	public function enqueue_styles () {
-		global $woothemes_sensei;
 
 		wp_register_style( $this->_token . '-frontend', esc_url( $this->assets_url ) . 'css/frontend.css', $this->_version );
 		wp_enqueue_style( $this->_token . '-frontend' );
+
 	} // End enqueue_styles()
 
 	/**
@@ -233,10 +233,10 @@ class Sensei_Course_Participants {
 	 * @return void
 	 */
 	public function enqueue_scripts () {
-		global $woothemes_sensei;
 
 		wp_register_script( $this->_token . '-frontend', esc_url( $this->assets_url ) . 'js/frontend' . $this->script_suffix . '.js', array( 'jquery' ), $this->_version );
 		wp_enqueue_script( $this->_token . '-frontend' );
+
 	} // End enqueue_scripts()
 
 	/**
