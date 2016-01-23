@@ -96,7 +96,7 @@ class Sensei_Course_Participants {
 		add_action( 'init', array( $this, 'load_localisation' ), 0 );
 
 		// Display course participants on course loop and single course
-		add_action( 'sensei_single_course_content_inside_before', array( $this, 'display_course_participant_count' ), 5 );
+		add_action( 'sensei_single_course_content_inside_before', array( $this, 'display_course_participant_count' ), 15 );
 		add_action( 'sensei_course_content_inside_before', array( $this, 'display_course_participant_count' ), 15, 1 );
 
 		// Include Widget
