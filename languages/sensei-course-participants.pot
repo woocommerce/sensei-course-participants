@@ -1,14 +1,14 @@
-# Copyright (C) 2014 Sensei Course Participants
+# Copyright (C) 2015 Sensei Course Participants
 # This file is distributed under the same license as the Sensei Course Participants package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Sensei Course Participants 1.0.0\n"
+"Project-Id-Version: Sensei Course Participants 1.1.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/sensei-course-participants\n"
-"POT-Creation-Date: 2014-06-23 09:13:04+00:00\n"
+"POT-Creation-Date: 2015-05-06 14:23:35+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
@@ -20,72 +20,86 @@ msgstr ""
 msgid "Sensei - Course Participants"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:94
+#: includes/class-sensei-course-participants-widget.php:93
 msgid "There are no other learners currently taking this course. Be the first!"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:118
+#: includes/class-sensei-course-participants-widget.php:113
+msgid "You"
+msgstr ""
+
+#: includes/class-sensei-course-participants-widget.php:121
 msgid "View public learner profile"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:197
+#: includes/class-sensei-course-participants-widget.php:139
+msgid "View all"
+msgstr ""
+
+#: includes/class-sensei-course-participants-widget.php:200
 msgid "Title (optional):"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:202
+#: includes/class-sensei-course-participants-widget.php:205
 msgid "Number of Learners (optional):"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:207
+#: includes/class-sensei-course-participants-widget.php:210
 msgid "Image Size (in pixels):"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:212
+#: includes/class-sensei-course-participants-widget.php:215
 msgid "Order By:"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:221
+#: includes/class-sensei-course-participants-widget.php:224
 msgid "Order Direction:"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:230
+#: includes/class-sensei-course-participants-widget.php:233
 msgid "Display:"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:248
+#: includes/class-sensei-course-participants-widget.php:251
 msgid "Date Registered"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:249
+#: includes/class-sensei-course-participants-widget.php:252
 msgid "Name"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:250
+#: includes/class-sensei-course-participants-widget.php:253
 msgid "Random Order"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:261
+#: includes/class-sensei-course-participants-widget.php:264
 msgid "Ascending"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:262
+#: includes/class-sensei-course-participants-widget.php:265
 msgid "Descending"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:273
+#: includes/class-sensei-course-participants-widget.php:276
 msgid "List"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:274
+#: includes/class-sensei-course-participants-widget.php:277
 msgid "Grid"
 msgstr ""
 
 #: includes/class-sensei-course-participants.php:125
-msgid "learners taking this course"
+msgid "%s %s taking this course"
 msgstr ""
 
-#: includes/class-sensei-course-participants.php:289
-#: includes/class-sensei-course-participants.php:298
+#: includes/class-sensei-course-participants.php:125
+msgid "learner"
+msgid_plural "learners"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-sensei-course-participants.php:317
+#: includes/class-sensei-course-participants.php:326
 msgid "Cheatin&#8217; huh?"
 msgstr ""
 #. Plugin Name of the plugin/theme
@@ -93,7 +107,7 @@ msgid "Sensei Course Participants"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "http://www.woothemes.com/"
+msgid "http://www.woothemes.com/products/sensei-course-participants/"
 msgstr ""
 
 #. Description of the plugin/theme

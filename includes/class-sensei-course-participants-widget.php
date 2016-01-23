@@ -46,7 +46,6 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 	 * @return void
 	 */
 	public function widget( $args, $instance ) {
-
 		extract( $args );
 
 		global $post, $current_user, $pre_requisite_complete, $user_taking_course;
@@ -107,10 +106,14 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 				$i++;
 				$class = $i <= $limit ? 'show' : 'hide';
 				$gravatar_email = $learner->user_email;
-				$image = '<figure itemprop="image">' . get_avatar( $gravatar_email, $size ) . '</figure>';
+				$image = '<figure itemprop="image">' . get_avatar( $gravatar_email, $size ) . '</figure>' . "\n";
 				$learner_name = '';
+				$display_name = $learner->display_name;
+				if ( get_current_user_id() == $learner->__get( 'ID' ) ) {
+					$display_name = __( 'You', 'sensei-course-participants' );
+				}
 				if ( 'list' == $display ) {
-					$learner_name = '<h3 itemprop="name" class="learner-name">' . $learner->display_name . '</h3>';
+					$learner_name = '<h3 itemprop="name" class="learner-name">' . esc_html( $display_name ) . '</h3>' . "\n";
 				}
 
 				if( true == $public_profiles ) {
@@ -122,7 +125,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 
 				$template = str_replace( '%%CLASS%%', $class, $template );
 				$template = str_replace( '%%IMAGE%%', $image, $template );
-				$template = str_replace( '%%TITLE%%', $learner_name, $template );	
+				$template = str_replace( '%%TITLE%%', $learner_name, $template );
 
 				$html .= $template;
 
@@ -133,7 +136,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 			// Display a view all link if not all learners are displayed.
 			if( $limit < count( $learners ) ) {
 
-				$html .= '<div class="sensei-view-all-participants"><a href="#">View all</a></div>';
+				$html .= '<div class="sensei-view-all-participants"><a href="#">' . __( 'View all', 'sensei-course-participants' ) . '</a></div>';
 
 			}
 

@@ -135,7 +135,7 @@ class Sensei_Course_Participants {
 
 		$learner_count = $this->get_course_participant_count( $post_id );
 
-		echo '<p class="sensei-course-participants"><strong>' . $learner_count . '</strong> ' . __( 'learners taking this course', 'sensei-course-participants' ) . '</p>';
+		echo '<p class="sensei-course-participants">' . sprintf( __( '%s %s taking this course', 'sensei-course-participants' ), '<strong>' . intval( $learner_count ) . '</strong>', _n( 'learner', 'learners', intval( $learner_count ), 'sensei-course-participants' ) ) . '</p>' . "\n";
 	}
 
 	/**
@@ -144,11 +144,22 @@ class Sensei_Course_Participants {
 	 * @since   1.0.0
 	 * @return integer
 	 */
-	public function get_course_participant_count( $post_id ) {
+	public function get_course_participant_count( $post_id = 0 ) {
 
-		// Get the number of learners taking this course
-		$course_learners = Sensei_Utils::sensei_check_for_activity( array( 'post_id' => $post_id ), true );
-		$course_learners = intval( count( $course_learners ) );
+		if( ! $post_id ) {
+			return 0;
+		}
+
+		$activity_args = array(
+			'post_id' => $post_id,
+			'type' => 'sensei_course_status',
+			'count' => true,
+			'number' => 0,
+			'offset' => 0,
+			'status' => 'any',
+		);
+
+		$course_learners = WooThemes_Sensei_Utils::sensei_check_for_activity( $activity_args, false );
 
 		return $course_learners;
 	}
@@ -162,17 +173,36 @@ class Sensei_Course_Participants {
 	 * @return array 	$learners 	The array of learners
 	 */
 	public function get_course_learners ( $order, $orderby ) {
-		$user_ids = Sensei_Utils::sensei_activity_ids( array( 'post_id' => intval( $this->get_course_id() ), 'type' => 'sensei_course_start', 'field' => 'user_id', ) );
-		$total = count( $user_ids );
+
+		$activity_args = array(
+			'post_id' => $this->get_course_id(),
+			'type' => 'sensei_course_status',
+			'number' => 0,
+			'offset' => 0,
+			'status' => 'any',
+		);
+
+		$users = WooThemes_Sensei_Utils::sensei_check_for_activity( $activity_args, true );
+		if ( !is_array($users) ) {
+			$users = array( $users );
+		}
+		$total = count( $users );
 
 		// Don't run the query if there are no users taking this course.
-		if ( empty($user_ids) ) return false;
+		if ( empty( $users ) ) {
+			return false;
+		}
 
 		// 'rand' can't be used in WP_User_Query, so save the setting and change it to 'user_registered'
 		// We can randomize the array after running the query
 		if ( isset( $orderby ) && 'rand' == $orderby ) {
 			$orderwas = 'rand';
 			$orderby = 'user_registered';
+		}
+
+		$user_ids = array();
+		foreach( $users as $user ) {
+			$user_ids[] = $user->user_id;
 		}
 
 		$args_array = array(
@@ -260,7 +290,7 @@ class Sensei_Course_Participants {
 	 * @return void
 	 */
 	public function load_localisation () {
-		load_plugin_textdomain( 'sensei-course-participants' , false , dirname( plugin_basename( $this->file ) ) . '/lang/' );
+		load_plugin_textdomain( 'sensei-course-participants' , false , dirname( plugin_basename( $this->file ) ) . '/languages/' );
 	} // End load_localisation()
 
 	/**
@@ -275,7 +305,7 @@ class Sensei_Course_Participants {
 	    $locale = apply_filters( 'plugin_locale' , get_locale() , $domain );
 
 	    load_textdomain( $domain , WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
-	    load_plugin_textdomain( $domain , FALSE , dirname( plugin_basename( $this->file ) ) . '/lang/' );
+	    load_plugin_textdomain( $domain , FALSE , dirname( plugin_basename( $this->file ) ) . '/languages/' );
 	} // End load_plugin_textdomain
 
 	/**
