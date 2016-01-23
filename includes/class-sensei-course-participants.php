@@ -97,7 +97,7 @@ class Sensei_Course_Participants {
 
 		// Display course participants on course loop and single course
 		add_action( 'sensei_single_course_content_inside_before', array( $this, 'display_course_participant_count' ), 5 );
-		add_action( 'sensei_course_archive_course_title', array( $this, 'display_course_participant_count' ), 15, 1 );
+		add_action( 'sensei_course_content_inside_before', array( $this, 'display_course_participant_count' ), 15, 1 );
 
 		// Include Widget
 		add_action( 'widgets_init', array( $this, 'include_widgets' ) );
@@ -115,10 +115,23 @@ class Sensei_Course_Participants {
 		$post_id = 0;
 
 		if( is_singular( 'course' ) ) {
-			$post_id = $post->ID;
-		} else if( isset( $post_item ) ) {
+
+            $post_id = $post->ID;
+
+		} else if( isset( $post_item ) && is_object( $post_item ) ) {
+
 			$post_id = absint( $post_item->ID );
-		}
+
+        } elseif( is_numeric( $post_item ) && $post_item > 0 ){
+
+            $post_id = $post_item;
+
+        }else{
+
+            return;
+
+        }
+
 
 		$learner_count = $this->get_course_participant_count( $post_id );
 
