@@ -112,7 +112,14 @@ class Sensei_Course_Participants {
 	 */
 	public function display_course_participant_count( $post_item = 0 ) {
 
-        global $post;
+        global $post, $wp_the_query;
+
+        if( isset( $wp_the_query->queried_object->ID )
+            && 'page' == get_post_type( $wp_the_query->queried_object->ID) ){
+
+            return;
+
+        }
 
 		$post_id = 0;
 
