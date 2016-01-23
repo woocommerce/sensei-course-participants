@@ -107,10 +107,12 @@ class Sensei_Course_Participants {
 	 * Display course participants on course loop and single course
 	 * @access  public
 	 * @since   1.0.0
-	 * @return void
+     * @param WP_Post | integer $post_item
+     * @return void
 	 */
-	public function display_course_participant_count( $post_item = null ) {
-		global $post;
+	public function display_course_participant_count( $post_item = 0 ) {
+
+        global $post;
 
 		$post_id = 0;
 
@@ -167,7 +169,6 @@ class Sensei_Course_Participants {
 	/**
 	 * Get an array of learners taking the course
 	 * @since  1.0.0
-	 * @param  integer 	$limit 		Number of users to display
 	 * @param  string 	$order 		Order direction
 	 * @param  string 	$orderby 	How to determine the order of learners
 	 * @return array 	$learners 	The array of learners

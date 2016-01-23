@@ -46,7 +46,14 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 	 * @return void
 	 */
 	public function widget( $args, $instance ) {
-		extract( $args );
+
+        $before_widget = $args['before_widget'];
+        $after_widget  = $args['after_widget'];
+        $before_title  = $args['before_title'];
+        $after_title   = $args['after_title'];
+        $title = $instance['title'];
+        $order = 'ASC';
+        $orderby = 'name';
 
 		global $post, $current_user, $pre_requisite_complete, $user_taking_course;
 
