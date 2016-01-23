@@ -129,11 +129,12 @@ class Sensei_Course_Participants {
 	 * Get the number of learners taking the current course
 	 * @access  public
 	 * @since   1.0.0
-	 * @return void
+	 * @return integer
 	 */
 	public function get_course_participant_count( $post_id ) {
+
 		// Get the number of learners taking this course
-		$course_learners = Sensei_Utils::sensei_check_for_activity( array( 'post_id' => $post_id, 'type' => 'sensei_course_start' ), true );
+		$course_learners = Sensei_Utils::sensei_check_for_activity( array( 'post_id' => $post_id ), true );
 		$course_learners = intval( count( $course_learners ) );
 
 		return $course_learners;
