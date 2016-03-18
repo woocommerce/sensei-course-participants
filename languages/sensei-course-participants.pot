@@ -1,107 +1,107 @@
-# Copyright (C) 2015 Sensei Course Participants
+# Copyright (C) 2016 Sensei Course Participants
 # This file is distributed under the same license as the Sensei Course Participants package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Sensei Course Participants 1.1.0\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/sensei-course-participants\n"
-"POT-Creation-Date: 2015-05-06 14:23:35+00:00\n"
+"Project-Id-Version: Sensei Course Participants 1.1.3\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sensei-course-"
+"participants\n"
+"POT-Creation-Date: 2016-03-18 12:35:00+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
 #: includes/class-sensei-course-participants-widget.php:28
-msgid "Displays a list of learners taking the current course, with links to their profiles (if public)."
+msgid ""
+"Displays a list of learners taking the current course, with links to their "
+"profiles (if public)."
 msgstr ""
 
 #: includes/class-sensei-course-participants-widget.php:30
 msgid "Sensei - Course Participants"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:93
+#: includes/class-sensei-course-participants-widget.php:100
 msgid "There are no other learners currently taking this course. Be the first!"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:113
+#: includes/class-sensei-course-participants-widget.php:120
 msgid "You"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:121
+#: includes/class-sensei-course-participants-widget.php:128
 msgid "View public learner profile"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:139
+#: includes/class-sensei-course-participants-widget.php:146
 msgid "View all"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:200
+#: includes/class-sensei-course-participants-widget.php:207
 msgid "Title (optional):"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:205
+#: includes/class-sensei-course-participants-widget.php:212
 msgid "Number of Learners (optional):"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:210
+#: includes/class-sensei-course-participants-widget.php:217
 msgid "Image Size (in pixels):"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:215
+#: includes/class-sensei-course-participants-widget.php:222
 msgid "Order By:"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:224
+#: includes/class-sensei-course-participants-widget.php:231
 msgid "Order Direction:"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:233
+#: includes/class-sensei-course-participants-widget.php:240
 msgid "Display:"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:251
+#: includes/class-sensei-course-participants-widget.php:258
 msgid "Date Registered"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:252
+#: includes/class-sensei-course-participants-widget.php:259
 msgid "Name"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:253
+#: includes/class-sensei-course-participants-widget.php:260
 msgid "Random Order"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:264
+#: includes/class-sensei-course-participants-widget.php:271
 msgid "Ascending"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:265
+#: includes/class-sensei-course-participants-widget.php:272
 msgid "Descending"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:276
+#: includes/class-sensei-course-participants-widget.php:283
 msgid "List"
 msgstr ""
 
-#: includes/class-sensei-course-participants-widget.php:277
+#: includes/class-sensei-course-participants-widget.php:284
 msgid "Grid"
 msgstr ""
 
-#: includes/class-sensei-course-participants.php:125
-msgid "%s %s taking this course"
-msgstr ""
-
-#: includes/class-sensei-course-participants.php:125
-msgid "learner"
-msgid_plural "learners"
+#: includes/class-sensei-course-participants.php:147
+msgid "%s learner taking this course"
+msgid_plural "%s learners taking this course"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-sensei-course-participants.php:317
-#: includes/class-sensei-course-participants.php:326
+#: includes/class-sensei-course-participants.php:341
+#: includes/class-sensei-course-participants.php:350
 msgid "Cheatin&#8217; huh?"
 msgstr ""
+
 #. Plugin Name of the plugin/theme
 msgid "Sensei Course Participants"
 msgstr ""
@@ -111,7 +111,9 @@ msgid "http://www.woothemes.com/products/sensei-course-participants/"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid "Displays the number of learners taking a course, and a widget with a list of those learners."
+msgid ""
+"Displays the number of learners taking a course, and a widget with a list of "
+"those learners."
 msgstr ""
 
 #. Author of the plugin/theme
