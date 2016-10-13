@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * Required functions
  */
 if ( ! function_exists( 'woothemes_queue_update' ) ) {
-	require_once( 'woo-includes/woo-functions.php' );
+	require_once( __DIR__ . '/woo-includes/woo-functions.php' );
 }
 
 /**
@@ -34,7 +34,7 @@ woothemes_queue_update( plugin_basename( __FILE__ ), 'f6479a8a3a01ac11794f32be22
  * Functions used by plugins
  */
 if ( ! class_exists( 'WooThemes_Sensei_Dependencies' ) ) {
-	require_once 'woo-includes/class-woothemes-sensei-dependencies.php';
+	require_once( __DIR__ . '/woo-includes/class-woothemes-sensei-dependencies.php' );
 }
 
 /**
@@ -48,7 +48,7 @@ if ( ! function_exists( 'is_sensei_active' ) ) {
 
 if( is_sensei_active() ) {
 
-	require_once( 'includes/class-sensei-course-participants.php' );
+	require_once( __DIR__ . '/includes/class-sensei-course-participants.php' );
 
 	/**
 	 * Returns the main instance of Sensei_Course_Participants to prevent the need to use globals.
