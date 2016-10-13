@@ -92,7 +92,6 @@ class Sensei_Course_Participants {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 10 );
 
 		// Handle localisation
-		$this->load_plugin_textdomain ();
 		add_action( 'init', array( $this, 'load_localisation' ), 0 );
 
 		// Display course participants on course loop and single course
@@ -115,7 +114,7 @@ class Sensei_Course_Participants {
         global $post, $wp_the_query;
 
         if( isset( $wp_the_query->queried_object->ID )
-            && 'page' == get_post_type( $wp_the_query->queried_object->ID) ){
+            && 'page' === get_post_type( $wp_the_query->queried_object->ID) ){
 
             return;
 
@@ -133,7 +132,7 @@ class Sensei_Course_Participants {
 
         } elseif( is_numeric( $post_item ) && $post_item > 0 ){
 
-            $post_id = $post_item;
+            $post_id = absint( $post_item );
 
         }else{
 
@@ -144,7 +143,7 @@ class Sensei_Course_Participants {
 
 		$learner_count = $this->get_course_participant_count( $post_id );
 
-		echo '<p class="sensei-course-participants">' . sprintf( __( '%s %s taking this course', 'sensei-course-participants' ), '<strong>' . intval( $learner_count ) . '</strong>', _n( 'learner', 'learners', intval( $learner_count ), 'sensei-course-participants' ) ) . '</p>' . "\n";
+		echo '<p class="sensei-course-participants">' . sprintf( esc_html__( '%s %s taking this course', 'sensei-course-participants' ), '<strong>' . intval( $learner_count ) . '</strong>', esc_html( _n( 'learner', 'learners', intval( $learner_count ), 'sensei-course-participants' ) ) ) . '</p>' . "\n";
 	}
 
 	/**
@@ -160,7 +159,7 @@ class Sensei_Course_Participants {
 		}
 
 		$activity_args = array(
-			'post_id' => $post_id,
+			'post_id' => absint( $post_id ),
 			'type' => 'sensei_course_status',
 			'count' => true,
 			'number' => 0,
@@ -183,7 +182,7 @@ class Sensei_Course_Participants {
 	public function get_course_learners ( $order, $orderby ) {
 
 		$activity_args = array(
-			'post_id' => $this->get_course_id(),
+			'post_id' => absint( $this->get_course_id() ),
 			'type' => 'sensei_course_status',
 			'number' => 0,
 			'offset' => 0,
@@ -203,14 +202,14 @@ class Sensei_Course_Participants {
 
 		// 'rand' can't be used in WP_User_Query, so save the setting and change it to 'user_registered'
 		// We can randomize the array after running the query
-		if ( isset( $orderby ) && 'rand' == $orderby ) {
+		if ( isset( $orderby ) && 'rand' === $orderby ) {
 			$orderwas = 'rand';
 			$orderby = 'user_registered';
 		}
 
 		$user_ids = array();
 		foreach( $users as $user ) {
-			$user_ids[] = $user->user_id;
+			$user_ids[] = absint( $user->user_id );
 		}
 
 		$args_array = array(
@@ -225,7 +224,7 @@ class Sensei_Course_Participants {
 		$learners = $learners_search->get_results();
 
 		// Shuffle the learners if the selected order was random
-		if( isset( $orderwas ) && 'rand' == $orderwas ) {
+		if( isset( $orderwas ) && 'rand' === $orderwas ) {
 			shuffle( $learners );
 		}
 
@@ -261,7 +260,7 @@ class Sensei_Course_Participants {
 	 * Include widgets
 	 */
 	public function include_widgets() {
-		include_once( 'class-sensei-course-participants-widget.php' );
+		include_once( __DIR__ . '/class-sensei-course-participants-widget.php' );
 		register_widget( 'Sensei_Course_Participants_Widget' );
 	}
 
@@ -290,16 +289,6 @@ class Sensei_Course_Participants {
 		wp_enqueue_script( $this->_token . '-frontend' );
 
 	} // End enqueue_scripts()
-
-	/**
-	 * Load plugin localisation.
-	 * @access  public
-	 * @since   1.0.0
-	 * @return void
-	 */
-	public function load_localisation () {
-		load_plugin_textdomain( 'sensei-course-participants' , false , dirname( plugin_basename( $this->file ) ) . '/languages/' );
-	} // End load_localisation()
 
 	/**
 	 * Load plugin textdomain.
