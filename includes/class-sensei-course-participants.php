@@ -92,7 +92,7 @@ class Sensei_Course_Participants {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 10 );
 
 		// Handle localisation
-		add_action( 'init', array( $this, 'load_localisation' ), 0 );
+		add_action( 'init', array( $this, 'load_plugin_textdomain' ), 0 );
 
 		// Display course participants on course loop and single course
 		add_action( 'sensei_single_course_content_inside_before', array( $this, 'display_course_participant_count' ), 15 );
@@ -291,7 +291,7 @@ class Sensei_Course_Participants {
 			'view_all' => esc_html__( 'View All', 'sensei-course-participants' ),
 			'close'    => esc_html__( 'Close', 'sensei-course-participants' ),
 		) );
-		
+
 		wp_enqueue_script( $this->_token . '-frontend' );
 
 	} // End enqueue_scripts()
@@ -302,7 +302,7 @@ class Sensei_Course_Participants {
 	 * @since   1.0.0
 	 * @return void
 	 */
-	public function load_plugin_textdomain () {
+	public function load_plugin_textdomain() {
 	    $domain = 'sensei-course-participants';
 
 	    $locale = apply_filters( 'plugin_locale' , get_locale() , $domain );
