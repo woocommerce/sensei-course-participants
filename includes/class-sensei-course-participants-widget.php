@@ -105,14 +105,14 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 
 			// Begin templating logic.
 			$tpl = '<li class="sensei-course-participant fix %%CLASS%%">%%IMAGE%%%%TITLE%%</li>';
-			$tpl = esc_html( apply_filters( 'sensei_course_participants_template', $tpl ) );
+			$tpl = wp_kses_post( apply_filters( 'sensei_course_participants_template', $tpl ) );
 
 			$i = 0;
 			foreach ($learners as $learner ) {
 				$template = $tpl;
 				$i++;
 				$class = $i <= $limit ? 'show' : 'hide';
-				$gravatar_email = esc_email( $learner->user_email );
+				$gravatar_email = sanitize_email( $learner->user_email );
 				$image = '<figure itemprop="image">' . get_avatar( $gravatar_email, $size ) . '</figure>' . "\n";
 				$learner_name = '';
 				$display_name = $learner->display_name;
