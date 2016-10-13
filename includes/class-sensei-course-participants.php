@@ -286,6 +286,12 @@ class Sensei_Course_Participants {
 	public function enqueue_scripts () {
 
 		wp_register_script( $this->_token . '-frontend', esc_url( $this->assets_url ) . 'js/frontend' . $this->script_suffix . '.js', array( 'jquery' ), $this->_version );
+
+		wp_localize_script( $this->_token . '-frontend', $this->_token . '_frontend', array(
+			'view_all' => esc_html__( 'View All', 'sensei-course-participants' ),
+			'close'    => esc_html__( 'Close', 'sensei-course-participants' ),
+		) );
+		
 		wp_enqueue_script( $this->_token . '-frontend' );
 
 	} // End enqueue_scripts()
