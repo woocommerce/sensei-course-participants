@@ -125,7 +125,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 
 				if( true == $public_profiles ) {
 					$profile_url = Sensei()->learner_profiles->get_permalink( $learner->ID );
-					$link = '<a href="' . esc_url( $profile_url ) . '" title="' . esc_html__( 'View public learner profile', 'sensei-course-participants' ) . '">';
+					$link = '<a href="' . esc_url( $profile_url ) . '" title="' . esc_attr__( 'View public learner profile', 'sensei-course-participants' ) . '">';
 					$image = $link . $image . '</a>';
 					$learner_name = $link . $learner_name . '</a>';
 				}
@@ -168,7 +168,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 		$instance = $old_instance;
 
 		/* Strip tags for title and limit to remove HTML (important for text inputs). */
-		$instance['title'] = esc_html( $new_instance['title'] );
+		$instance['title'] = strip_tags( $new_instance['title'] );
 		$instance['limit'] = intval( $new_instance['limit'] );
 		$instance['size'] = intval( $new_instance['size'] );
 
