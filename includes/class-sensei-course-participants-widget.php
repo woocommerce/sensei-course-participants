@@ -25,9 +25,9 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 	public function __construct() {
 		/* Widget variable settings. */
 		$this->woo_widget_cssclass = 'widget_sensei_course_participants';
-		$this->woo_widget_description = __( 'Displays a list of learners taking the current course, with links to their profiles (if public).', 'sensei-course-participants' );
+		$this->woo_widget_description = esc_html__( 'Displays a list of learners taking the current course, with links to their profiles (if public).', 'sensei-course-participants' );
 		$this->woo_widget_idbase = 'sensei_course_participants';
-		$this->woo_widget_title = __( 'Sensei - Course Participants', 'sensei-course-participants' );
+		$this->woo_widget_title = esc_html__( 'Sensei - Course Participants', 'sensei-course-participants' );
 		/* Widget settings. */
 		$widget_ops = array( 'classname' => $this->woo_widget_cssclass, 'description' => $this->woo_widget_description );
 
@@ -60,7 +60,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 		if ( !( is_singular( 'course' ) || is_singular( 'lesson' ) || is_singular( 'quiz' ) || is_tax( 'module' ) ) ) return;
 
 		if ( isset( $instance['title'] ) ) {
-			$title = apply_filters('widget_title', $instance['title'], $instance, $this->id_base );
+			$title = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
 		}
 		if ( isset( $instance['limit'] ) && ( 0 < count( $instance['limit'] ) ) ) {
 			$limit = intval( $instance['limit'] );
@@ -90,47 +90,47 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 		echo $before_widget;
 
 		/* Display the widget title if one was input */
-		if ( $title ) { echo $before_title . $title . $after_title; }
+		if ( $title ) { echo $before_title . esc_html( $title ) . $after_title; }
 
 		// Add actions for plugins/themes to hook onto.
 		do_action( $this->woo_widget_cssclass . '_top' );
 
 		$html = '';
 		if( false === $learners ) {
-			$html .= '<p>' . __( 'There are no other learners currently taking this course. Be the first!', 'sensei-course-participants' ) . '</p>';
+			$html .= '<p>' . esc_html__( 'There are no other learners currently taking this course. Be the first!', 'sensei-course-participants' ) . '</p>';
 		} else {
 
 			$list_class = 'grid' == $display ? 'grid' : 'list';
-			$html .= '<ul class="sensei-course-participants-list' . ' ' . $list_class . '">';
+			$html .= '<ul class="sensei-course-participants-list' . ' ' . esc_attr( $list_class ) . '">';
 
 			// Begin templating logic.
 			$tpl = '<li class="sensei-course-participant fix %%CLASS%%">%%IMAGE%%%%TITLE%%</li>';
-			$tpl = apply_filters( 'sensei_course_participants_template', $tpl );
+			$tpl = wp_kses_post( apply_filters( 'sensei_course_participants_template', $tpl ) );
 
 			$i = 0;
 			foreach ($learners as $learner ) {
 				$template = $tpl;
 				$i++;
 				$class = $i <= $limit ? 'show' : 'hide';
-				$gravatar_email = $learner->user_email;
+				$gravatar_email = sanitize_email( $learner->user_email );
 				$image = '<figure itemprop="image">' . get_avatar( $gravatar_email, $size ) . '</figure>' . "\n";
 				$learner_name = '';
 				$display_name = $learner->display_name;
-				if ( get_current_user_id() == $learner->__get( 'ID' ) ) {
-					$display_name = __( 'You', 'sensei-course-participants' );
+				if ( get_current_user_id() === $learner->__get( 'ID' ) ) {
+					$display_name = esc_html__( 'You', 'sensei-course-participants' );
 				}
 				if ( 'list' == $display ) {
 					$learner_name = '<h3 itemprop="name" class="learner-name">' . esc_html( $display_name ) . '</h3>' . "\n";
 				}
 
 				if( true == $public_profiles ) {
-					$profile_url = esc_url( Sensei()->learner_profiles->get_permalink( $learner->ID ) );
-					$link = '<a href="' . $profile_url . '" title="' . __( 'View public learner profile', 'sensei-course-participants' ) . '">';
+					$profile_url = Sensei()->learner_profiles->get_permalink( $learner->ID );
+					$link = '<a href="' . esc_url( $profile_url ) . '" title="' . esc_attr__( 'View public learner profile', 'sensei-course-participants' ) . '">';
 					$image = $link . $image . '</a>';
 					$learner_name = $link . $learner_name . '</a>';
 				}
 
-				$template = str_replace( '%%CLASS%%', $class, $template );
+				$template = str_replace( '%%CLASS%%', esc_attr( $class ), $template );
 				$template = str_replace( '%%IMAGE%%', $image, $template );
 				$template = str_replace( '%%TITLE%%', $learner_name, $template );
 
@@ -143,7 +143,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 			// Display a view all link if not all learners are displayed.
 			if( $limit < count( $learners ) ) {
 
-				$html .= '<div class="sensei-view-all-participants"><a href="#">' . __( 'View all', 'sensei-course-participants' ) . '</a></div>';
+				$html .= '<div class="sensei-view-all-participants"><a href="#">' . esc_html__( 'View all', 'sensei-course-participants' ) . '</a></div>';
 
 			}
 
@@ -204,43 +204,43 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 ?>
 		<!-- Widget Title: Text Input -->
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title (optional):', 'sensei-course-participants' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Title (optional):', 'sensei-course-participants' ); ?></label>
 			<input type="text" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>"  value="<?php echo esc_attr( $instance['title'] ); ?>" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" />
 		</p>
 		<!-- Widget Limit: Text Input -->
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'limit' ) ); ?>"><?php _e( 'Number of Learners (optional):', 'sensei-course-participants' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'limit' ) ); ?>"><?php esc_html_e( 'Number of Learners (optional):', 'sensei-course-participants' ); ?></label>
 			<input type="text" name="<?php echo esc_attr( $this->get_field_name( 'limit' ) ); ?>"  value="<?php echo esc_attr( $instance['limit'] ); ?>" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'limit' ) ); ?>" />
 		</p>
 		<!-- Image Size: Text Input -->
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'size' ) ); ?>"><?php _e( 'Image Size (in pixels):', 'sensei-course-participants' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'size' ) ); ?>"><?php esc_html_e( 'Image Size (in pixels):', 'sensei-course-participants' ); ?></label>
 			<input type="text" name="<?php echo esc_attr( $this->get_field_name( 'size' ) ); ?>"  value="<?php echo esc_attr( $instance['size'] ); ?>" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'size' ) ); ?>" />
 		</p>
 		<!-- Widget Order By: Select Input -->
 		<p>
-			<label for="<?php echo $this->get_field_id( 'orderby' ); ?>"><?php _e( 'Order By:', 'sensei-course-participants' ); ?></label>
-			<select name="<?php echo $this->get_field_name( 'orderby' ); ?>" class="widefat" id="<?php echo $this->get_field_id( 'orderby' ); ?>">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'orderby' ) ); ?>"><?php esc_html_e( 'Order By:', 'sensei-course-participants' ); ?></label>
+			<select name="<?php echo esc_attr( $this->get_field_name( 'orderby' ) ); ?>" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'orderby' ) ); ?>">
 			<?php foreach ( $this->get_orderby_options() as $k => $v ) { ?>
-				<option value="<?php echo $k; ?>"<?php selected( $instance['orderby'], $k ); ?>><?php echo $v; ?></option>
+				<option value="<?php echo esc_attr( $k ); ?>"<?php selected( $instance['orderby'], $k ); ?>><?php echo esc_html( $v ); ?></option>
 			<?php } ?>
 			</select>
 		</p>
 		<!-- Widget Order: Select Input -->
 		<p>
-			<label for="<?php echo $this->get_field_id( 'order' ); ?>"><?php _e( 'Order Direction:', 'sensei-course-participants' ); ?></label>
-			<select name="<?php echo $this->get_field_name( 'order' ); ?>" class="widefat" id="<?php echo $this->get_field_id( 'order' ); ?>">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'order' ) ); ?>"><?php esc_html_e( 'Order Direction:', 'sensei-course-participants' ); ?></label>
+			<select name="<?php echo esc_attr( $this->get_field_name( 'order' ) ); ?>" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'order' ) ); ?>">
 			<?php foreach ( $this->get_order_options() as $k => $v ) { ?>
-				<option value="<?php echo $k; ?>"<?php selected( $instance['order'], $k ); ?>><?php echo $v; ?></option>
+				<option value="<?php echo esc_attr( $k ); ?>"<?php selected( $instance['order'], $k ); ?>><?php echo esc_html( $v ); ?></option>
 			<?php } ?>
 			</select>
 		</p>
 		<!-- Widget Display: Select Input -->
 		<p>
-			<label for="<?php echo $this->get_field_id( 'display' ); ?>"><?php _e( 'Display:', 'sensei-course-participants' ); ?></label>
-			<select name="<?php echo $this->get_field_name( 'display' ); ?>" class="widefat" id="<?php echo $this->get_field_id( 'display' ); ?>">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'display' ) ); ?>"><?php esc_html_e( 'Display:', 'sensei-course-participants' ); ?></label>
+			<select name="<?php echo esc_attr( $this->get_field_name( 'display' ) ); ?>" class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'display' ) ); ?>">
 			<?php foreach ( $this->get_display_options() as $k => $v ) { ?>
-				<option value="<?php echo $k; ?>"<?php selected( $instance['display'], $k ); ?>><?php echo $v; ?></option>
+				<option value="<?php echo esc_attr( $k ); ?>"<?php selected( $instance['display'], $k ); ?>><?php echo esc_html( $v ); ?></option>
 			<?php } ?>
 			</select>
 		</p>
@@ -255,9 +255,9 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 	 */
 	protected function get_orderby_options () {
 		return array(
-					'user_registered'	=> __( 'Date Registered', 'sensei-course-participants' ),
-					'display_name' 		=> __( 'Name', 'sensei-course-participants' ),
-					'rand' 				=> __( 'Random Order', 'sensei-course-participants' )
+					'user_registered'	=> esc_html__( 'Date Registered', 'sensei-course-participants' ),
+					'display_name' 		=> esc_html__( 'Name', 'sensei-course-participants' ),
+					'rand' 				=> esc_html__( 'Random Order', 'sensei-course-participants' )
 					);
 	} // End get_orderby_options()
 
@@ -268,8 +268,8 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 	 */
 	protected function get_order_options () {
 		return array(
-					'ASC' 			=> __( 'Ascending', 'sensei-course-participants' ),
-					'DESC' 			=> __( 'Descending', 'sensei-course-participants' )
+					'ASC' 			=> esc_html__( 'Ascending', 'sensei-course-participants' ),
+					'DESC' 			=> esc_html__( 'Descending', 'sensei-course-participants' )
 					);
 	} // End get_order_options()
 
@@ -280,8 +280,8 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 	 */
 	protected function get_display_options () {
 		return array(
-					'list' 			=> __( 'List', 'sensei-course-participants' ),
-					'grid' 			=> __( 'Grid', 'sensei-course-participants' )
+					'list' 			=> esc_html__( 'List', 'sensei-course-participants' ),
+					'grid' 			=> esc_html__( 'Grid', 'sensei-course-participants' )
 					);
 	} // End get_display_options()
 }
