@@ -1,28 +1,32 @@
 .widget_sensei_course_participants {
 	.sensei-course-participants-list {
 		overflow: hidden;
+
 		.sensei-course-participant {
 			clear: left;
 			list-style: none;
+
 			figure {
 				float: left;
 				margin-right: 1em;
 				margin-bottom: 1em;
 			}
+
 			h3 {
 				border: none;
 			}
+
 			&.hide {
 				display: none;
 			}
 		}
-		&.grid {
-			.sensei-course-participant {
-				clear: none;
-				float: left;
-			}
+
+		&.grid .sensei-course-participant {
+			clear: none;
+			float: left;
 		}
 	}
+
 	.sensei-view-all-participants {
 		text-align: center;
 	}
