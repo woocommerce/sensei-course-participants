@@ -58,6 +58,7 @@ class Sensei_Course_Participants {
 	 * @since  1.0.0
 	 */
 	private $script_suffix;
+	private $course_learner_count = null;
 
 	/**
 	 * Set the default properties and hooks methods.
@@ -155,10 +156,13 @@ class Sensei_Course_Participants {
 	 * Get the number of learners taking the current course
 	 *
 	 * @since  1.0.0
+	 *
+	 * @param int  $post_id           Post ID.
+	 * @param bool $exclude_completed True if we should exclude completed learners from the participant count.
 	 * @return integer
 	 */
-	public function get_course_participant_count( $post_id = 0 ) {
-		if ( empty( $post_id ) ) {
+	public function get_course_participant_count( $post_id = 0, $exclude_completed = false ) {
+		if( ! $post_id ) {
 			return 0;
 		}
 
@@ -168,7 +172,7 @@ class Sensei_Course_Participants {
 			'count'   => true,
 			'number'  => 0,
 			'offset'  => 0,
-			'status'  => 'any',
+			'status'  => $exclude_completed ? 'in-progress' : 'any',
 		);
 
 		$course_learners = WooThemes_Sensei_Utils::sensei_check_for_activity( $activity_args, false );
@@ -184,13 +188,14 @@ class Sensei_Course_Participants {
 	 * @param  string $orderby  How to determine the order of learners
 	 * @return array  $learners The array of learners
 	 */
-	public function get_course_learners( $order, $orderby ) {
+	public function get_course_learners( $order, $orderby, $exclude_completed = false ) {
+
 		$activity_args = array(
 			'post_id' => absint( $this->get_course_id() ),
 			'type'    => 'sensei_course_status',
 			'number'  => 0,
 			'offset'  => 0,
-			'status'  => 'any',
+			'status'  => $exclude_completed ? 'in-progress' : 'any',
 		);
 
 		$users = WooThemes_Sensei_Utils::sensei_check_for_activity( $activity_args, true );
