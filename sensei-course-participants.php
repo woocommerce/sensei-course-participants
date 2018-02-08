@@ -16,7 +16,9 @@
  * @since 1.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Required functions
@@ -46,7 +48,7 @@ if ( ! function_exists( 'is_sensei_active' ) ) {
   }
 }
 
-if( is_sensei_active() ) {
+if ( is_sensei_active() ) {
 
 	require_once( __DIR__ . '/includes/class-sensei-course-participants.php' );
 
