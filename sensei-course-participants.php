@@ -4,15 +4,15 @@
  * Version: 1.1.3
  * Plugin URI: https://woocommerce.com/products/sensei-course-participants/
  * Description: Displays the number of learners taking a course, and a widget with a list of those learners.
- * Author: WooThemes
- * Author URI: https://woocommerce.com/
+ * Author: Automattic
+ * Author URI: https://automattic.com/
  * Requires at least: 3.8
  * Tested up to: 4.1
  * Text Domain: sensei-course-participants
  * Domain Path: /languages/
  *
  * @package WordPress
- * @author WooThemes
+ * @author Automattic
  * @since 1.0.0
  */
 
