@@ -1,0 +1,128 @@
+# Copyright (C) 2015 Sensei Course Participants
+# This file is distributed under the same license as the Sensei Course Participants package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Sensei Course Participants 1.1.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/sensei-course-participants\n"
+"POT-Creation-Date: 2015-05-06 14:23:35+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2018-08-26 18:58+0500\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Last-Translator: Airat Halitov <translate@airat.biz>\n"
+"Language-Team: Airat Halitov <translate@airat.biz>\n"
+"Language: ru_RU\n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#: includes/class-sensei-course-participants-widget.php:28
+msgid "Displays a list of learners taking the current course, with links to their profiles (if public)."
+msgstr "Отображает список учеников курса со ссылками на их профили (если они публичны)."
+
+#: includes/class-sensei-course-participants-widget.php:30
+msgid "Sensei - Course Participants"
+msgstr "Sensei - Course Participants"
+
+#: includes/class-sensei-course-participants-widget.php:93
+msgid "There are no other learners currently taking this course. Be the first!"
+msgstr "На этом курсе нет других учеников. Будь первым!"
+
+#: includes/class-sensei-course-participants-widget.php:113
+msgid "You"
+msgstr "Вы"
+
+#: includes/class-sensei-course-participants-widget.php:121
+msgid "View public learner profile"
+msgstr "Посмотреть публичный профиль ученика"
+
+#: includes/class-sensei-course-participants-widget.php:139
+msgid "View all"
+msgstr "Посмотреть все"
+
+#: includes/class-sensei-course-participants-widget.php:200
+msgid "Title (optional):"
+msgstr "Заголовок (не обязательно):"
+
+#: includes/class-sensei-course-participants-widget.php:205
+msgid "Number of Learners (optional):"
+msgstr "Количество учеников (не обязательно):"
+
+#: includes/class-sensei-course-participants-widget.php:210
+msgid "Image Size (in pixels):"
+msgstr "Размер изображения (в пикселях):"
+
+#: includes/class-sensei-course-participants-widget.php:215
+msgid "Order By:"
+msgstr "Сортироват по:"
+
+#: includes/class-sensei-course-participants-widget.php:224
+msgid "Order Direction:"
+msgstr "Порядок сортировки:"
+
+#: includes/class-sensei-course-participants-widget.php:233
+msgid "Display:"
+msgstr "Отображение:"
+
+#: includes/class-sensei-course-participants-widget.php:251
+msgid "Date Registered"
+msgstr "Дата регистрации"
+
+#: includes/class-sensei-course-participants-widget.php:252
+msgid "Name"
+msgstr "Имя"
+
+#: includes/class-sensei-course-participants-widget.php:253
+msgid "Random Order"
+msgstr "Случайный порядок"
+
+#: includes/class-sensei-course-participants-widget.php:264
+msgid "Ascending"
+msgstr "По возрастанию"
+
+#: includes/class-sensei-course-participants-widget.php:265
+msgid "Descending"
+msgstr "По убыванию"
+
+#: includes/class-sensei-course-participants-widget.php:276
+msgid "List"
+msgstr "Список"
+
+#: includes/class-sensei-course-participants-widget.php:277
+msgid "Grid"
+msgstr "Сетка"
+
+#: includes/class-sensei-course-participants.php:125
+msgid "%s %s taking this course"
+msgstr "%s %s проходит этот курс"
+
+#: includes/class-sensei-course-participants.php:125
+msgid "learner"
+msgid_plural "learners"
+msgstr[0] "ученик"
+msgstr[1] "ученика"
+msgstr[2] "учеников"
+
+#: includes/class-sensei-course-participants.php:317
+#: includes/class-sensei-course-participants.php:326
+msgid "Cheatin&#8217; huh?"
+msgstr "Барахлит, да?"
+
+#. Plugin Name of the plugin/theme
+msgid "Sensei Course Participants"
+msgstr "Sensei Course Participants"
+
+#. Plugin URI of the plugin/theme
+msgid "http://www.woothemes.com/products/sensei-course-participants/"
+msgstr "http://www.woothemes.com/products/sensei-course-participants/"
+
+#. Description of the plugin/theme
+msgid "Displays the number of learners taking a course, and a widget with a list of those learners."
+msgstr "Отображает количество учеников курса и виджет со списком профилей учеников."
+
+#. Author of the plugin/theme
+msgid "WooThemes"
+msgstr "WooThemes"
+
+#. Author URI of the plugin/theme
+msgid "http://www.woothemes.com/"
+msgstr "http://www.woothemes.com/"
