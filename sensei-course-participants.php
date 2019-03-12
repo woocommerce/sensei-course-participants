@@ -32,13 +32,13 @@ if ( ! function_exists( 'woothemes_queue_update' ) ) {
  */
 woothemes_queue_update( plugin_basename( __FILE__ ), 'f6479a8a3a01ac11794f32be22b0682f', 435834 );
 
-require_once __DIR__ . '/includes/class-sensei-course-participants-dependency-checker.php';
+require_once dirname( __FILE__ ) . '/includes/class-sensei-course-participants-dependency-checker.php';
 
 if ( ! Sensei_Course_Participants_Dependency_Checker::are_dependencies_met() ) {
 	return;
 }
 
-require_once( __DIR__ . '/includes/class-sensei-course-participants.php' );
+require_once( dirname( __FILE__ ) . '/includes/class-sensei-course-participants.php' );
 
 /**
  * Returns the main instance of Sensei_Course_Participants to prevent the need to use globals.
