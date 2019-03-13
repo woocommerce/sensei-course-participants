@@ -21,12 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/**
- * Functions used by plugins
- */
-if ( ! class_exists( 'WooThemes_Sensei_Dependencies' ) ) {
-	require_once( __DIR__ . '/woo-includes/class-woothemes-sensei-dependencies.php' );
-}
+require_once dirname( __FILE__ ) . '/includes/class-sensei-course-participants-dependency-checker.php';
 
 if ( ! Sensei_Course_Participants_Dependency_Checker::are_dependencies_met() ) {
 	return;
