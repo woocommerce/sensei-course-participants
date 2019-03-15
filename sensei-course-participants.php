@@ -10,6 +10,7 @@
  * Tested up to: 4.1
  * Text Domain: sensei-course-participants
  * Domain Path: /languages/
+ * Woo: 435834:f6479a8a3a01ac11794f32be22b0682f
  *
  * @package WordPress
  * @author Automattic
@@ -19,18 +20,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-/**
- * Required functions
- */
-if ( ! function_exists( 'woothemes_queue_update' ) ) {
-	require_once( __DIR__ . '/woo-includes/woo-functions.php' );
-}
-
-/**
- * Plugin updates
- */
-woothemes_queue_update( plugin_basename( __FILE__ ), 'f6479a8a3a01ac11794f32be22b0682f', 435834 );
 
 require_once dirname( __FILE__ ) . '/includes/class-sensei-course-participants-dependency-checker.php';
 
