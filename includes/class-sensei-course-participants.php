@@ -72,16 +72,19 @@ class Sensei_Course_Participants {
 		$this->assets_url    = esc_url( trailingslashit( plugins_url( '/assets/', SENSEI_COURSE_PARTICIPANTS_PLUGIN_FILE ) ) );
 		$this->script_suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
+		$this->load_plugin_textdomain();
+
 		register_activation_hook( SENSEI_COURSE_PARTICIPANTS_PLUGIN_FILE, array( $this, 'install' ) );
 
-		// Handle localisation
-		add_action( 'init', array( $this, 'load_plugin_textdomain' ), 0 );
 	}
 
 	/**
 	 * Set up all actions and filters.
 	 */
 	public static function init() {
+		$instance = self::instance();
+		add_action( 'init', array( $instance, 'load_localisation' ), 0 );
+
 		if ( ! Sensei_Course_Participants_Dependency_Checker::are_plugin_dependencies_met() ) {
 			return;
 		}
@@ -95,8 +98,6 @@ class Sensei_Course_Participants {
 		function Sensei_Course_Participants() {
 			return Sensei_Course_Participants::instance();
 		}
-
-		$instance = self::instance();
 
 		// Load frontend JS & CSS
 		add_action( 'wp_enqueue_scripts', array( $instance, 'enqueue_styles' ), 10 );
@@ -313,7 +314,15 @@ class Sensei_Course_Participants {
 		$locale = apply_filters( 'plugin_locale' , get_locale() , $domain );
 
 		load_textdomain( $domain , WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
-		load_plugin_textdomain( $domain , FALSE , dirname( SENSEI_COURSE_PARTICIPANTS_PLUGIN_BASENAME ) . '/languages/' );
+	}
+
+	/**
+	 * Load plugin localisation.
+	 *
+	 * @since   2.0.0
+	 */
+	public function load_localisation () {
+		load_plugin_textdomain( 'sensei-course-participants', false , dirname( SENSEI_COURSE_PARTICIPANTS_PLUGIN_BASENAME ) . '/languages/' );
 	}
 
 	/**
