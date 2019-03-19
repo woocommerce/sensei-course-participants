@@ -33,24 +33,6 @@ class Sensei_Course_Participants {
 	private $_token;
 
 	/**
-	 * The main plugin file.
-	 *
-	 * @var    string
-	 * @access private
-	 * @since  1.0.0
-	 */
-	private $file;
-
-	/**
-	 * The main plugin directory.
-	 *
-	 * @var    string
-	 * @access private
-	 * @since  1.0.0
-	 */
-	private $dir;
-
-	/**
 	 * The plugin assets directory.
 	 *
 	 * @var    string
@@ -83,30 +65,50 @@ class Sensei_Course_Participants {
 	 * @since   1.0.0
 	 * @return  void
 	 */
-	public function __construct( $file, $version = '1.0.0' ) {
-		$this->_version      = $version;
+	public function __construct() {
+		$this->_version      = SENSEI_COURSE_PARTICIPANTS_VERSION;
 		$this->_token        = 'sensei_course_participants';
-		$this->file          = $file;
-		$this->dir           = dirname( $this->file );
-		$this->assets_dir    = trailingslashit( $this->dir ) . 'assets';
-		$this->assets_url    = esc_url( trailingslashit( plugins_url( '/assets/', $this->file ) ) );
+		$this->assets_dir    = trailingslashit( dirname( SENSEI_COURSE_PARTICIPANTS_PLUGIN_FILE ) ) . 'assets';
+		$this->assets_url    = esc_url( trailingslashit( plugins_url( '/assets/', SENSEI_COURSE_PARTICIPANTS_PLUGIN_FILE ) ) );
 		$this->script_suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		register_activation_hook( $this->file, array( $this, 'install' ) );
-
-		// Load frontend JS & CSS
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ), 10 );
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 10 );
+		register_activation_hook( SENSEI_COURSE_PARTICIPANTS_PLUGIN_FILE, array( $this, 'install' ) );
 
 		// Handle localisation
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ), 0 );
+	}
+
+	/**
+	 * Set up all actions and filters.
+	 */
+	public static function init() {
+		if ( ! Sensei_Course_Participants_Dependency_Checker::are_plugin_dependencies_met() ) {
+			return;
+		}
+
+		/**
+		 * Returns the main instance of Sensei_Course_Participants to prevent the need to use globals.
+		 *
+		 * @since  1.0.0
+		 * @return object Sensei_Course_Participants
+		 */
+		function Sensei_Course_Participants() {
+			return Sensei_Course_Participants::instance();
+		}
+
+		$instance = self::instance();
+
+		// Load frontend JS & CSS
+		add_action( 'wp_enqueue_scripts', array( $instance, 'enqueue_styles' ), 10 );
+		add_action( 'wp_enqueue_scripts', array( $instance, 'enqueue_scripts' ), 10 );
+
 
 		// Display course participants on course loop and single course
-		add_action( 'sensei_single_course_content_inside_before', array( $this, 'display_course_participant_count' ), 15 );
-		add_action( 'sensei_course_content_inside_before', array( $this, 'display_course_participant_count' ), 15, 1 );
+		add_action( 'sensei_single_course_content_inside_before', array( $instance, 'display_course_participant_count' ), 15 );
+		add_action( 'sensei_course_content_inside_before', array( $instance, 'display_course_participant_count' ), 15, 1 );
 
 		// Include Widget
-		add_action( 'widgets_init', array( $this, 'include_widgets' ) );
+		add_action( 'widgets_init', array( $instance, 'include_widgets' ) );
 	}
 
 	/**
@@ -311,7 +313,7 @@ class Sensei_Course_Participants {
 		$locale = apply_filters( 'plugin_locale' , get_locale() , $domain );
 
 		load_textdomain( $domain , WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
-		load_plugin_textdomain( $domain , FALSE , dirname( plugin_basename( $this->file ) ) . '/languages/' );
+		load_plugin_textdomain( $domain , FALSE , dirname( SENSEI_COURSE_PARTICIPANTS_PLUGIN_BASENAME ) . '/languages/' );
 	}
 
 	/**
@@ -321,12 +323,11 @@ class Sensei_Course_Participants {
 	 *
 	 * @since 1.0.0
 	 * @static
-	 * @see Sensei_Course_Participants()
-	 * @return Main Sensei_Course_Participants instance
+	 * @return Sensei_Course_Participants
 	 */
-	public static function instance( $file, $version = '1.0.0' ) {
+	public static function instance() {
 		if ( is_null( self::$_instance ) ) {
-			self::$_instance = new self( $file, $version );
+			self::$_instance = new self();
 		}
 
 		return self::$_instance;
