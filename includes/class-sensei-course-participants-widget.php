@@ -180,8 +180,24 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 					$learner_name = '<h3 itemprop="name" class="learner-name">' . esc_html( $display_name ) . '</h3>' . "\n";
 				}
 
+				$profile_url = false;
 				if ( true === $public_profiles ) {
 					$profile_url  = Sensei()->learner_profiles->get_permalink( $learner->ID );
+				}
+
+				/**
+				 * Filter the learner profile URL for course participants.
+				 *
+				 * @since 2.0.0
+				 *
+				 * @param string|bool $profile_url The learner's public profile URL if public profiles are enabled. Otherwise, this will be false.
+				 * @param WP_Post     $learner     The learner being displayed.
+				 *
+				 * @return string|bool The profile URL to be used, or false.
+				 */
+				$profile_url = apply_filters( 'sensei_course_participants_profile_url', $profile_url, $learner );
+
+				if ( $profile_url ) {
 					$link         = '<a href="' . esc_url( $profile_url ) . '" title="' . esc_attr__( 'View public learner profile', 'sensei-course-participants' ) . '">';
 					$image        = $link . $image . '</a>';
 					$learner_name = $link . $learner_name . '</a>';
