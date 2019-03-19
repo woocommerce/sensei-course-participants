@@ -85,13 +85,14 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 	 * @return void
 	 */
 	public function widget( $args, $instance ) {
-		global $post, $current_user, $pre_requisite_complete, $user_taking_course;
-
-		$before_widget = $args['before_widget'];
-		$after_widget  = $args['after_widget'];
-		$before_title  = $args['before_title'];
-		$after_title   = $args['after_title'];
-		$title         = $instance['title'];
+		$before_widget = isset( $args['before_widget'] ) ? $args['before_widget'] : '';
+		$after_widget  = isset( $args['after_widget'] ) ? $args['after_widget'] : '';
+		$before_title  = isset( $args['before_title'] ) ? $args['before_title'] : '';
+		$after_title   = isset( $args['after_title'] ) ? $args['after_title'] : '';
+		$title         = isset( $instance['title'] ) ? $instance['title'] : '';
+		$display       = 'list';
+		$limit         = 5;
+		$size          = 50;
 		$order         = 'ASC';
 		$orderby       = 'name';
 
@@ -104,11 +105,11 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 			$title = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
 		}
 
-		if ( isset( $instance['limit'] ) && ( 0 < count( $instance['limit'] ) ) ) {
+		if ( isset( $instance['limit'] ) && ( 0 < intval( $instance['limit'] ) ) ) {
 			$limit = intval( $instance['limit'] );
 		}
 
-		if ( isset( $instance['size'] ) && ( 0 < count( $instance['size'] ) ) ) {
+		if ( isset( $instance['size'] ) && ( 0 < intval( $instance['size'] ) ) ) {
 			$size = intval( $instance['size'] );
 		}
 
@@ -125,7 +126,9 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 			$order = $instance['order'];
 		}
 
-		$course_id       = Sensei_Course_Participants()->get_course_id();
+		/**
+		 * @var WP_User[] $learners
+		 */
 		$learners        = Sensei_Course_Participants()->get_course_learners( $order, $orderby );
 		$public_profiles = false;
 
@@ -169,7 +172,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 				$learner_name   = '';
 				$display_name   = $learner->display_name;
 
-				if ( get_current_user_id() === $learner->__get( 'ID' ) ) {
+				if ( get_current_user_id() === $learner->ID ) {
 					$display_name = esc_html__( 'You', 'sensei-course-participants' );
 				}
 
