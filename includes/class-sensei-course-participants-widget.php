@@ -177,7 +177,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 				}
 
 				if ( 'list' === $display ) {
-					$learner_name = '<h3 itemprop="name" class="learner-name">' . esc_html( $display_name ) . '</h3>' . "\n";
+					$learner_name = '<p itemprop="name" class="learner-name">' . esc_html( $display_name ) . "</p>\n";
 				}
 
 				$profile_url = false;
