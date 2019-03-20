@@ -85,17 +85,16 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 	 * @return void
 	 */
 	public function widget( $args, $instance ) {
-		$before_widget     = isset( $args['before_widget'] ) ? $args['before_widget'] : '';
-		$after_widget      = isset( $args['after_widget'] ) ? $args['after_widget'] : '';
-		$before_title      = isset( $args['before_title'] ) ? $args['before_title'] : '';
-		$after_title       = isset( $args['after_title'] ) ? $args['after_title'] : '';
-		$title             = isset( $instance['title'] ) ? $instance['title'] : '';
-		$exclude_completed = isset( $instance['exclude_completed'] ) ? (bool) $instance['exclude_completed'] : false;
-		$display           = 'list';
-		$limit             = 5;
-		$size              = 50;
-		$order             = 'ASC';
-		$orderby           = 'name';
+		$before_widget = isset( $args['before_widget'] ) ? $args['before_widget'] : '';
+		$after_widget  = isset( $args['after_widget'] ) ? $args['after_widget'] : '';
+		$before_title  = isset( $args['before_title'] ) ? $args['before_title'] : '';
+		$after_title   = isset( $args['after_title'] ) ? $args['after_title'] : '';
+		$title         = isset( $instance['title'] ) ? $instance['title'] : '';
+		$display       = 'list';
+		$limit         = 5;
+		$size          = 50;
+		$order         = 'ASC';
+		$orderby       = 'name';
 
 		if ( ! ( is_singular( 'course' ) || is_singular( 'lesson' ) ||
 			 is_singular( 'quiz' ) || is_tax( 'module' ) ) ) {
@@ -127,14 +126,10 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 			$order = $instance['order'];
 		}
 
-		$course_id = Sensei_Course_Participants()->get_course_id();
-
-		Sensei_Course_Participants()->get_course_participant_count( $course_id, $exclude_completed );
-
 		/**
 		 * @var WP_User[] $learners
 		 */
-		$learners = Sensei_Course_Participants()->get_course_learners( $order, $orderby, $exclude_completed );
+		$learners        = Sensei_Course_Participants()->get_course_learners( $order, $orderby );
 		$public_profiles = false;
 
 		if ( isset( Sensei()->settings->settings[ 'learner_profile_enable' ] ) && Sensei()->settings->settings[ 'learner_profile_enable' ] ) {
@@ -226,7 +221,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 	 * @param  array $old_instance Previous settings.
 	 * @return array               Updated settings.
 	 */
-	public function update( $new_instance, $old_instance ) {
+	public function update ( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
 		// Strip tags for title and limit to remove HTML (important for text inputs)
@@ -238,8 +233,6 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 		$instance['orderby'] = esc_attr( $new_instance['orderby'] );
 		$instance['order']   = esc_attr( $new_instance['order'] );
 		$instance['display'] = esc_attr( $new_instance['display'] );
-
-		$instance['exclude_completed'] = (bool)$new_instance['exclude_completed'];
 
 		return $instance;
 	}
@@ -256,13 +249,12 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 		// Set up some default widget settings.
 		// Make sure all keys are added here, even with empty string values.
 		$defaults = array(
-			'title'             => '',
-			'limit'             => 5,
-			'size'              => 50,
-			'orderby'           => 'user_registered',
-			'order'             => 'ASC',
-			'display'           => 'list',
-			'exclude_completed' => 0,
+			'title'   => '',
+			'limit'   => 5,
+			'size'    => 50,
+			'orderby' => 'user_registered',
+			'order'   => 'ASC',
+			'display' => 'list',
 		);
 
 		$instance = wp_parse_args( (array) $instance, $defaults );
@@ -308,11 +300,6 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 				<option value="<?php echo esc_attr( $k ); ?>"<?php selected( $instance['display'], $k ); ?>><?php echo esc_html( $v ); ?></option>
 			<?php } ?>
 			</select>
-		</p>
-		<!-- Widget Exclude Completed: Checkbox -->
-		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'exclude_completed' ) ); ?>"><?php esc_html_e( 'Exclude Completed:', 'sensei-course-participants' ); ?></label>
-			<input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'exclude_completed' ) ); ?>" <?php checked( $instance['exclude_completed'] ); ?> id="<?php echo esc_attr( $this->get_field_id( 'exclude_completed' ) ); ?>">
 		</p>
 
 		<?php
