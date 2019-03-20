@@ -116,7 +116,7 @@ class Sensei_Course_Participants {
 	 * Display course participants on course loop and single course
 	 *
 	 * @since  1.0.0
-	 * @param  WP_Post|integer $post_item         Post object or ID.
+	 * @param  WP_Post|int $post_item Post object or ID.
 	 * @return void
 	 */
 	public function display_course_participant_count( $post_item = 0 ) {
