@@ -191,7 +191,7 @@ class Sensei_Course_Participants_Widget extends WP_Widget {
 				 * @since 2.0.0
 				 *
 				 * @param string|bool $profile_url The learner's public profile URL if public profiles are enabled. Otherwise, this will be false.
-				 * @param WP_Post     $learner     The learner being displayed.
+				 * @param WP_User     $learner     The learner being displayed.
 				 *
 				 * @return string|bool The profile URL to be used, or false.
 				 */
