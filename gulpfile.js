@@ -56,7 +56,7 @@ function php() {
 function pot() {
 	return src( [ 'sensei-course-participants.php', 'includes/**/*.php' ] )
 		.pipe( wpPot( {
-			domain: 'sensei_course_participants',
+			domain: 'sensei-course-participants',
 			package: 'Sensei Course Participants',
 		} ) )
 		.pipe( dest( 'languages/sensei-course-participants.pot' ) );
