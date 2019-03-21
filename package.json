@@ -1,0 +1,32 @@
+{
+  "name": "sensei-course-participants",
+  "version": "1.1.3",
+  "description": "Increase course enrolments by showing site visitors just how popular your courses are.",
+  "main": "sensei-course-participants.php",
+  "scripts": {
+    "dev": "NODE_ENV=dev gulp package",
+    "prod": "NODE_ENV=prod gulp package",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/woocommerce/sensei-course-participants.git"
+  },
+  "keywords": [
+    "sensei"
+  ],
+  "author": "Automattic",
+  "license": "GPL-2.0+",
+  "bugs": {
+    "url": "https://github.com/woocommerce/sensei-course-participants/issues"
+  },
+  "homepage": "https://github.com/woocommerce/sensei-course-participants#readme",
+  "devDependencies": {
+    "del": "^4.0.0",
+    "gulp": "^4.0.0",
+    "gulp-minify": "^3.1.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-wp-pot": "^2.3.4",
+    "gulp-zip": "^4.2.0"
+  }
+}
