@@ -51,15 +51,6 @@ class Sensei_Course_Participants {
 	private $assets_url;
 
 	/**
-	 * Suffix for Javascripts.
-	 *
-	 * @var    string
-	 * @access private
-	 * @since  1.0.0
-	 */
-	private $script_suffix;
-
-	/**
 	 * Set the default properties and hooks methods.
 	 *
 	 * @since   1.0.0
@@ -70,7 +61,6 @@ class Sensei_Course_Participants {
 		$this->_token        = 'sensei_course_participants';
 		$this->assets_dir    = trailingslashit( dirname( SENSEI_COURSE_PARTICIPANTS_PLUGIN_FILE ) ) . 'assets';
 		$this->assets_url    = esc_url( trailingslashit( plugins_url( '/assets/', SENSEI_COURSE_PARTICIPANTS_PLUGIN_FILE ) ) );
-		$this->script_suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 		$this->load_plugin_textdomain();
 
@@ -310,8 +300,7 @@ class Sensei_Course_Participants {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-
-		wp_register_script( $this->_token . '-frontend', esc_url( $this->assets_url ) . 'js/frontend' . $this->script_suffix . '.js', array( 'jquery' ), $this->_version );
+		wp_register_script( $this->_token . '-frontend', esc_url( $this->assets_url ) . 'js/frontend.js', array( 'jquery' ), $this->_version );
 
 		wp_localize_script( $this->_token . '-frontend', $this->_token . '_frontend', array(
 			'view_all' => esc_html__( 'View All', 'sensei-course-participants' ),
@@ -319,7 +308,6 @@ class Sensei_Course_Participants {
 		) );
 
 		wp_enqueue_script( $this->_token . '-frontend' );
-
 	}
 
 	/**
