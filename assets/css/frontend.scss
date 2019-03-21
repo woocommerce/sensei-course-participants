@@ -12,16 +12,14 @@
 				margin-bottom: 1em;
 			}
 
-			h3 {
-				border: none;
-			}
-
 			&.hide {
 				display: none;
 			}
 
 			.learner-name {
+				display: block;
 				clear: both;
+				margin-bottom: 1em;
 			}
 		}
 
