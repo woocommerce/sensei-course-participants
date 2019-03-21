@@ -116,7 +116,7 @@ class Sensei_Course_Participants {
 	 * Display course participants on course loop and single course
 	 *
 	 * @since  1.0.0
-	 * @param  WP_Post | integer $post_item
+	 * @param  WP_Post|int $post_item Post object or ID.
 	 * @return void
 	 */
 	public function display_course_participant_count( $post_item = 0 ) {
@@ -125,8 +125,6 @@ class Sensei_Course_Participants {
 		if ( isset( $wp_the_query->queried_object->ID ) && 'page' === get_post_type( $wp_the_query->queried_object->ID ) ){
 			return;
 		}
-
-		$post_id = 0;
 
 		if ( is_singular( 'course' ) ) {
 			$post_id = $post->ID;
@@ -152,9 +150,29 @@ class Sensei_Course_Participants {
 	}
 
 	/**
+	 * Exclude participants who have completed the course.
+	 *
+	 * @param int $post_id Post ID for the course.
+	 * @return bool
+	 */
+	private function exclude_completed_participants( $post_id ) {
+		/**
+		 * Change whether or not completed participants are to be included in participant counts and lists.
+		 *
+		 * @since 2.0.0
+		 *
+		 * @param bool $exclude_completed_participants True if we should exclude completed participants.
+		 * @param int  $post_id                        Post ID for the course.
+		 */
+		return apply_filters( 'sensei_course_participants_exclude_completed_participants', true, $post_id );
+	}
+
+	/**
 	 * Get the number of learners taking the current course
 	 *
 	 * @since  1.0.0
+	 *
+	 * @param int $post_id Post ID.
 	 * @return integer
 	 */
 	public function get_course_participant_count( $post_id = 0 ) {
@@ -162,13 +180,14 @@ class Sensei_Course_Participants {
 			return 0;
 		}
 
-		$activity_args = array(
+		$exclude_completed = $this->exclude_completed_participants( $post_id );
+		$activity_args     = array(
 			'post_id' => absint( $post_id ),
 			'type'    => 'sensei_course_status',
 			'count'   => true,
 			'number'  => 0,
 			'offset'  => 0,
-			'status'  => 'any',
+			'status'  => $exclude_completed ? 'in-progress' : 'any',
 		);
 
 		$course_learners = WooThemes_Sensei_Utils::sensei_check_for_activity( $activity_args, false );
@@ -185,12 +204,13 @@ class Sensei_Course_Participants {
 	 * @return array  $learners The array of learners
 	 */
 	public function get_course_learners( $order, $orderby ) {
-		$activity_args = array(
+		$exclude_completed = $this->exclude_completed_participants( $this->get_course_id() );
+		$activity_args     = array(
 			'post_id' => absint( $this->get_course_id() ),
 			'type'    => 'sensei_course_status',
 			'number'  => 0,
 			'offset'  => 0,
-			'status'  => 'any',
+			'status'  => $exclude_completed ? 'in-progress' : 'any',
 		);
 
 		$users = WooThemes_Sensei_Utils::sensei_check_for_activity( $activity_args, true );
