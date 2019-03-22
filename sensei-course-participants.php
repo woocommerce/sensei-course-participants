@@ -3,11 +3,11 @@
  * Plugin Name: Sensei Course Participants
  * Version: 2.0.0-beta.1
  * Plugin URI: https://woocommerce.com/products/sensei-course-participants/
- * Description: Displays the number of learners taking a course, and a widget with a list of those learners.
+ * Description: Increase course enrolments by showing site visitors just how popular your courses are.
  * Author: Automattic
  * Author URI: https://automattic.com/
  * Requires at least: 3.8
- * Tested up to: 4.1
+ * Tested up to: 5.1
  * Requires PHP: 5.6
  * Text Domain: sensei-course-participants
  * Domain Path: /languages/
