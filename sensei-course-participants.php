@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Sensei Course Participants
- * Version: 1.1.3
+ * Version: 2.0.0-beta.1
  * Plugin URI: https://woocommerce.com/products/sensei-course-participants/
  * Description: Displays the number of learners taking a course, and a widget with a list of those learners.
  * Author: Automattic
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SENSEI_COURSE_PARTICIPANTS_VERSION', '1.1.3' );
+define( 'SENSEI_COURSE_PARTICIPANTS_VERSION', '2.0.0-beta.1' );
 define( 'SENSEI_COURSE_PARTICIPANTS_PLUGIN_FILE', __FILE__ );
 define( 'SENSEI_COURSE_PARTICIPANTS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
