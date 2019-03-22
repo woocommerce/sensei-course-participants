@@ -1,23 +1,38 @@
 *** Sensei Course Participants Changelog ***
 
+2019.03.29 - version 2.0.0
+* New: Add dependency check for minimum Sensei (1.11.0) and PHP (5.6) versions - #31
+* New: Add `sensei_course_participants_profile_url` filter to customize participant profile URL in the widget - #36
+* New: Add `sensei_course_participants_exclude_completed_participants` filter for determining whether or not to include learners who have already completed the course in the learner count and widget - #27
+* New: Add Russian translation (@AiratHalitov) - #28
+* Tweak: Only include learners who are taking the course in the learner count and widget - #27
+* Tweak: Replace the <h3> tag with a <span> tag for the participant's name in the widget - #35
+* Tweak: Check dependencies and perform the majority of plugin loading tasks after other plugins have loaded - #33
+* Tweak: Update JavaScript filename - #39
+* Tweak: Escape data and absolute paths - #23
+* Tweak: Small changes to meet coding standards - #26
+* Tweak: Update plugin header - #21, #30
+* Tweak: Use Woo header for plugin updates - #32
+* Fix: Fix PHP warnings in the widget - #34
+
 2016.02.02 - version 1.1.3
- * Tweak - Ensures compatibility with Sensei 1.9
+ * Tweak - Ensure compatibility with Sensei 1.9
 
 2015.10.08 - version 1.1.2
- * Fix - Fixes a PHP notice
- * Fix - Updates widget constructor due to a change in WordPress
+ * Fix - Fix a PHP notice
+ * Fix - Update widget constructor due to a change in WordPress
 
 2015.05.06 - version 1.1.1
- * Fix - Fixes an issue with a single course participant not showing correctly.
- * Fix - Updates .pot file to ensure all strings are included.
- * Tweak - Adjusts the localisation loader to look inside the 'languages' directory.
+ * Tweak - Adjust the localisation loader to look inside the 'languages' directory
+ * Fix - Fix an issue with a single course participant not showing correctly
+ * Fix - Update .pot file to ensure all strings are included
 
 2015.03.18 - version 1.1.0
- * Tweak - Display "You" instead of the current learner's display name in the widget.
- * Tweak - Display "learner" or "learners" intelligently when displaying the course participant count on course archive screens.
+ * Tweak - Display "You" instead of the current learner's display name in the widget
+ * Tweak - Display "learner" or "learners" intelligently when displaying the course participant count on course archive screens
 
 2015.02.01 - version 1.0.1
- * Tweak - Updating code for Sensei 1.7 compatibility
+ * Tweak - Update code for Sensei 1.7 compatibility
 
 2014.06.23 - version 1.0.0
  * First release
