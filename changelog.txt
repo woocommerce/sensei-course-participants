@@ -1,6 +1,6 @@
 *** Sensei Course Participants Changelog ***
 
-2019.03.29 - version 2.0.0
+2019.04.26 - version 2.0.0
 * New: Add dependency check for minimum Sensei (1.11.0) and PHP (5.6) versions - #31
 * New: Add `sensei_course_participants_profile_url` filter to customize participant profile URL in the widget - #36
 * New: Add `sensei_course_participants_exclude_completed_participants` filter for determining whether or not to include learners who have already completed the course in the learner count and widget - #27
