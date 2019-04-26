@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Sensei Course Participants
- * Version: 2.0.0-beta.1
+ * Version: 2.0.0
  * Plugin URI: https://woocommerce.com/products/sensei-course-participants/
  * Description: Increase course enrolments by showing site visitors just how popular your courses are.
  * Author: Automattic
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SENSEI_COURSE_PARTICIPANTS_VERSION', '2.0.0-beta.1' );
+define( 'SENSEI_COURSE_PARTICIPANTS_VERSION', '2.0.0' );
 define( 'SENSEI_COURSE_PARTICIPANTS_PLUGIN_FILE', __FILE__ );
 define( 'SENSEI_COURSE_PARTICIPANTS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 

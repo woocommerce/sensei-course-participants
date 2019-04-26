@@ -1,6 +1,6 @@
 {
   "name": "sensei-course-participants",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0",
   "description": "Increase course enrolments by showing site visitors just how popular your courses are.",
   "main": "sensei-course-participants.php",
   "scripts": {
