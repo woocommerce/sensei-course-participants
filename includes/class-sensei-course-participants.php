@@ -103,6 +103,21 @@ class Sensei_Course_Participants {
 	}
 
 	/**
+	 * If the new enrolment provider method is not available, return true.
+	 * 
+	 * @since 2.0.1
+	 *
+	 * @return bool
+	 */
+	public static function use_legacy_enrolment_method() {
+		if ( ! interface_exists( '\Sensei_Course_Enrolment_Provider_Interface' ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Display course participants on course loop and single course
 	 *
 	 * @since  1.0.0
@@ -158,11 +173,13 @@ class Sensei_Course_Participants {
 	}
 
 	/**
-	 * Get the number of learners taking the current course
+	 * Get the number of learners taking the current course.
 	 *
-	 * @since  1.0.0
+	 * @since 1.0.0
+	 * @since 2.0.1 Changed to count enrolled users instead of learners in progress.
 	 *
 	 * @param int $post_id Post ID.
+	 * 
 	 * @return integer
 	 */
 	public function get_course_participant_count( $post_id = 0 ) {
@@ -171,7 +188,12 @@ class Sensei_Course_Participants {
 		}
 
 		$exclude_completed = $this->exclude_completed_participants( $post_id );
-		$activity_args     = array(
+
+		if ( ! self::use_legacy_enrolment_method() ) {
+			return count( $this->get_enrolled_participants_ids( $post_id, $exclude_completed ) );
+		}
+
+		$activity_args = array(
 			'post_id' => absint( $post_id ),
 			'type'    => 'sensei_course_status',
 			'count'   => true,
@@ -272,6 +294,28 @@ class Sensei_Course_Participants {
 		$course_id = intval( $course_id );
 
 		return $course_id;
+	}
+
+	/**
+	 * Get enrolled participants ids
+	 * 
+	 * @since 2.0.1
+	 *
+	 * @param int  $course_id         Course ID.
+	 * @param bool $exclude_completed Flag if should exclude the completed participants.
+	 * 
+	 * @return void
+	 */
+	private function get_enrolled_participants_ids( $course_id, $exclude_completed ) {
+		$user_ids = Sensei_Course_Enrolment::get_course_instance( $course_id )->get_enrolled_user_ids();
+
+		if ( $exclude_completed ) {
+			$user_ids = array_filter( $user_ids, function( $user_id ) use ($course_id) {
+				return ! WooThemes_Sensei_Utils::user_completed_course( $course_id, $user_id );
+			} );
+		}
+
+		return $user_ids;
 	}
 
 	/**
