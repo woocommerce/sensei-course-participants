@@ -208,33 +208,46 @@ class Sensei_Course_Participants {
 	}
 
 	/**
-	 * Get an array of learners taking the course
+	 * Get an array of learners taking the course.
 	 *
-	 * @since  1.0.0
-	 * @param  string $order    Order direction
-	 * @param  string $orderby  How to determine the order of learners
-	 * @return array  $learners The array of learners
+	 * @since 1.0.0
+	 * @since 2.0.1 Changed to get enrolled users instead of learners in progress.
+	 * 
+	 * @param  string $order    Order direction.
+	 * @param  string $orderby  How to determine the order of learners.
+	 *
+	 * @return array|false  $learners The array of learners.
+	 *                                If there are no users taking the course, returns `false`.
 	 */
 	public function get_course_learners( $order, $orderby ) {
-		$exclude_completed = $this->exclude_completed_participants( $this->get_course_id() );
-		$activity_args     = array(
-			'post_id' => absint( $this->get_course_id() ),
-			'type'    => 'sensei_course_status',
-			'number'  => 0,
-			'offset'  => 0,
-			'status'  => $exclude_completed ? 'in-progress' : 'any',
-		);
+		$post_id           = $this->get_course_id();
+		$exclude_completed = $this->exclude_completed_participants( $post_id );
 
-		$users = WooThemes_Sensei_Utils::sensei_check_for_activity( $activity_args, true );
+		if ( ! self::use_legacy_enrolment_method() ) {
+			$user_ids = $this->get_enrolled_participants_ids( $post_id, $exclude_completed );
+		} else {
+			$activity_args     = array(
+				'post_id' => absint( $this->get_course_id() ),
+				'type'    => 'sensei_course_status',
+				'number'  => 0,
+				'offset'  => 0,
+				'status'  => $exclude_completed ? 'in-progress' : 'any',
+			);
 
-		if ( ! is_array( $users ) ) {
-			$users = array( $users );
+			$users = WooThemes_Sensei_Utils::sensei_check_for_activity( $activity_args, true );
+
+			if ( ! is_array( $users ) ) {
+				$users = array( $users );
+			}
+
+			$user_ids = array();
+			foreach ( $users as $user ) {
+				$user_ids[] = absint( $user->user_id );
+			}
 		}
 
-		$total = count( $users );
-
 		// Don't run the query if there are no users taking this course.
-		if ( empty( $users ) ) {
+		if ( empty( $user_ids ) ) {
 			return false;
 		}
 
@@ -245,13 +258,7 @@ class Sensei_Course_Participants {
 			$orderby  = 'user_registered';
 		}
 
-		$user_ids = array();
-		foreach ( $users as $user ) {
-			$user_ids[] = absint( $user->user_id );
-		}
-
 		$args_array = array(
-			'number'  => $total,
 			'include' => $user_ids,
 			'orderby' => $orderby,
 			'order'   => $order,
