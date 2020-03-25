@@ -103,21 +103,6 @@ class Sensei_Course_Participants {
 	}
 
 	/**
-	 * If the new enrolment provider method is not available, return true.
-	 * 
-	 * @since 2.0.1
-	 *
-	 * @return bool
-	 */
-	public static function use_legacy_enrolment_method() {
-		if ( ! interface_exists( '\Sensei_Course_Enrolment_Provider_Interface' ) ) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
 	 * Display course participants on course loop and single course
 	 *
 	 * @since  1.0.0
@@ -173,6 +158,21 @@ class Sensei_Course_Participants {
 	}
 
 	/**
+	 * If the new enrolment provider method is not available, return true.
+	 *
+	 * @since 2.0.1
+	 *
+	 * @return bool
+	 */
+	private function use_legacy_enrolment_method() {
+		if ( ! interface_exists( '\Sensei_Course_Enrolment_Provider_Interface' ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Get the number of learners taking the current course.
 	 *
 	 * @since 1.0.0
@@ -189,7 +189,7 @@ class Sensei_Course_Participants {
 
 		$exclude_completed = $this->exclude_completed_participants( $post_id );
 
-		if ( ! self::use_legacy_enrolment_method() ) {
+		if ( ! $this->use_legacy_enrolment_method() ) {
 			return count( $this->get_enrolled_participants_ids( $post_id, $exclude_completed ) );
 		}
 
@@ -223,7 +223,7 @@ class Sensei_Course_Participants {
 		$post_id           = $this->get_course_id();
 		$exclude_completed = $this->exclude_completed_participants( $post_id );
 
-		if ( ! self::use_legacy_enrolment_method() ) {
+		if ( ! $this->use_legacy_enrolment_method() ) {
 			$user_ids = $this->get_enrolled_participants_ids( $post_id, $exclude_completed );
 		} else {
 			$activity_args     = array(
