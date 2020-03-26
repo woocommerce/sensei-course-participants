@@ -311,7 +311,7 @@ class Sensei_Course_Participants {
 	 * @param int  $course_id         Course ID.
 	 * @param bool $exclude_completed Flag if should exclude the completed participants.
 	 * 
-	 * @return void
+	 * @return int[]
 	 */
 	private function get_enrolled_participants_ids( $course_id, $exclude_completed ) {
 		$user_ids = Sensei_Course_Enrolment::get_course_instance( $course_id )->get_enrolled_user_ids();
