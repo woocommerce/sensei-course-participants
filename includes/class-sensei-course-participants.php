@@ -317,9 +317,12 @@ class Sensei_Course_Participants {
 		$user_ids = Sensei_Course_Enrolment::get_course_instance( $course_id )->get_enrolled_user_ids();
 
 		if ( $exclude_completed ) {
-			$user_ids = array_filter( $user_ids, function( $user_id ) use ($course_id) {
-				return ! WooThemes_Sensei_Utils::user_completed_course( $course_id, $user_id );
-			} );
+			$user_ids = array_filter(
+				$user_ids,
+				function( $user_id ) use ($course_id) {
+					return ! WooThemes_Sensei_Utils::user_completed_course( $course_id, $user_id );
+				}
+			);
 		}
 
 		return $user_ids;
