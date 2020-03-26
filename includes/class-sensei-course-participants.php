@@ -202,7 +202,7 @@ class Sensei_Course_Participants {
 			'status'  => $exclude_completed ? 'in-progress' : 'any',
 		);
 
-		$course_learners = WooThemes_Sensei_Utils::sensei_check_for_activity( $activity_args, false );
+		$course_learners = Sensei_Utils::sensei_check_for_activity( $activity_args, false );
 
 		return $course_learners;
 	}
@@ -234,7 +234,7 @@ class Sensei_Course_Participants {
 				'status'  => $exclude_completed ? 'in-progress' : 'any',
 			);
 
-			$users = WooThemes_Sensei_Utils::sensei_check_for_activity( $activity_args, true );
+			$users = Sensei_Utils::sensei_check_for_activity( $activity_args, true );
 
 			if ( ! is_array( $users ) ) {
 				$users = array( $users );
@@ -320,7 +320,7 @@ class Sensei_Course_Participants {
 			$user_ids = array_filter(
 				$user_ids,
 				function( $user_id ) use ($course_id) {
-					return ! WooThemes_Sensei_Utils::user_completed_course( $course_id, $user_id );
+					return ! Sensei_Utils::user_completed_course( $course_id, $user_id );
 				}
 			);
 		}
