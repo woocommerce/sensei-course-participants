@@ -189,22 +189,7 @@ class Sensei_Course_Participants {
 
 		$exclude_completed = $this->exclude_completed_participants( $post_id );
 
-		if ( ! $this->use_legacy_enrolment_method() ) {
-			return count( $this->get_enrolled_participants_ids( $post_id, $exclude_completed ) );
-		}
-
-		$activity_args = array(
-			'post_id' => absint( $post_id ),
-			'type'    => 'sensei_course_status',
-			'count'   => true,
-			'number'  => 0,
-			'offset'  => 0,
-			'status'  => $exclude_completed ? 'in-progress' : 'any',
-		);
-
-		$course_learners = Sensei_Utils::sensei_check_for_activity( $activity_args, false );
-
-		return $course_learners;
+		return $this->get_enrolled_participants_ids( $post_id, $exclude_completed, true );
 	}
 
 	/**
@@ -222,29 +207,7 @@ class Sensei_Course_Participants {
 	public function get_course_learners( $order, $orderby ) {
 		$post_id           = $this->get_course_id();
 		$exclude_completed = $this->exclude_completed_participants( $post_id );
-
-		if ( ! $this->use_legacy_enrolment_method() ) {
-			$user_ids = $this->get_enrolled_participants_ids( $post_id, $exclude_completed );
-		} else {
-			$activity_args     = array(
-				'post_id' => absint( $this->get_course_id() ),
-				'type'    => 'sensei_course_status',
-				'number'  => 0,
-				'offset'  => 0,
-				'status'  => $exclude_completed ? 'in-progress' : 'any',
-			);
-
-			$users = Sensei_Utils::sensei_check_for_activity( $activity_args, true );
-
-			if ( ! is_array( $users ) ) {
-				$users = array( $users );
-			}
-
-			$user_ids = array();
-			foreach ( $users as $user ) {
-				$user_ids[] = absint( $user->user_id );
-			}
-		}
+		$user_ids          = $this->get_enrolled_participants_ids( $post_id, $exclude_completed );
 
 		// Don't run the query if there are no users taking this course.
 		if ( empty( $user_ids ) ) {
@@ -304,16 +267,21 @@ class Sensei_Course_Participants {
 	}
 
 	/**
-	 * Get enrolled participants ids
+	 * Get enrolled participants IDs.
 	 * 
 	 * @since 2.0.1
 	 *
 	 * @param int  $course_id         Course ID.
 	 * @param bool $exclude_completed Flag if should exclude the completed participants.
+	 * @param bool $count             Flag we want to count (true) or get the user ids (false).
 	 * 
-	 * @return int[]
+	 * @return int[]|int
 	 */
-	private function get_enrolled_participants_ids( $course_id, $exclude_completed ) {
+	private function get_enrolled_participants_ids( $course_id, $exclude_completed, $count = false ) {
+		if ( $this->use_legacy_enrolment_method() ) {
+			return $this->get_enrolled_participants_ids_legacy( $course_id, $exclude_completed, $count );
+		}
+
 		$user_ids = Sensei_Course_Enrolment::get_course_instance( $course_id )->get_enrolled_user_ids();
 
 		if ( $exclude_completed ) {
@@ -323,6 +291,49 @@ class Sensei_Course_Participants {
 					return ! Sensei_Utils::user_completed_course( $course_id, $user_id );
 				}
 			);
+		}
+
+		if ( $count ) {
+			return count( $user_ids );
+		}
+
+		return $user_ids;
+	}
+
+	/**
+	 * Get legacy enrolled participants IDs.
+	 *
+	 * @since 2.0.1
+	 *
+	 * @param int  $course_id         Course ID.
+	 * @param bool $exclude_completed Flag if should exclude the completed participants.
+	 * @param bool $count             Flag we want to count (true) or get the user ids (false).
+	 *
+	 * @return int[]|int
+	 */
+	private function get_enrolled_participants_ids_legacy( $course_id, $exclude_completed, $count = false ) {
+		$activity_args = array(
+			'post_id' => absint( $course_id ),
+			'type'    => 'sensei_course_status',
+			'count'   => $count,
+			'number'  => 0,
+			'offset'  => 0,
+			'status'  => $exclude_completed ? 'in-progress' : 'any',
+		);
+
+		$course_learners = Sensei_Utils::sensei_check_for_activity( $activity_args, ! $count );
+
+		if ( $count ) {
+			return $course_learners;
+		}
+
+		if ( ! is_array( $course_learners ) ) {
+			$course_learners = array( $course_learners );
+		}
+
+		$user_ids = array();
+		foreach ( $course_learners as $user ) {
+			$user_ids[] = absint( $user->user_id );
 		}
 
 		return $user_ids;
