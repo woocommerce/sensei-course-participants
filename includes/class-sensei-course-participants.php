@@ -158,11 +158,28 @@ class Sensei_Course_Participants {
 	}
 
 	/**
-	 * Get the number of learners taking the current course
+	 * If the new enrolment provider method is not available, return true.
 	 *
-	 * @since  1.0.0
+	 * @since 2.0.1
+	 *
+	 * @return bool
+	 */
+	private function use_legacy_enrolment_method() {
+		if ( ! interface_exists( '\Sensei_Course_Enrolment_Provider_Interface' ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get the number of learners taking the current course.
+	 *
+	 * @since 1.0.0
+	 * @since 2.0.1 Changed to count enrolled users instead of learners in progress.
 	 *
 	 * @param int $post_id Post ID.
+	 * 
 	 * @return integer
 	 */
 	public function get_course_participant_count( $post_id = 0 ) {
@@ -171,48 +188,29 @@ class Sensei_Course_Participants {
 		}
 
 		$exclude_completed = $this->exclude_completed_participants( $post_id );
-		$activity_args     = array(
-			'post_id' => absint( $post_id ),
-			'type'    => 'sensei_course_status',
-			'count'   => true,
-			'number'  => 0,
-			'offset'  => 0,
-			'status'  => $exclude_completed ? 'in-progress' : 'any',
-		);
 
-		$course_learners = WooThemes_Sensei_Utils::sensei_check_for_activity( $activity_args, false );
-
-		return $course_learners;
+		return $this->get_enrolled_participants_ids( $post_id, $exclude_completed, true );
 	}
 
 	/**
-	 * Get an array of learners taking the course
+	 * Get an array of learners taking the course.
 	 *
-	 * @since  1.0.0
-	 * @param  string $order    Order direction
-	 * @param  string $orderby  How to determine the order of learners
-	 * @return array  $learners The array of learners
+	 * @since 1.0.0
+	 * @since 2.0.1 Changed to get enrolled users instead of learners in progress.
+	 * 
+	 * @param  string $order    Order direction.
+	 * @param  string $orderby  How to determine the order of learners.
+	 *
+	 * @return array|false  $learners The array of learners.
+	 *                                If there are no users taking the course, returns `false`.
 	 */
 	public function get_course_learners( $order, $orderby ) {
-		$exclude_completed = $this->exclude_completed_participants( $this->get_course_id() );
-		$activity_args     = array(
-			'post_id' => absint( $this->get_course_id() ),
-			'type'    => 'sensei_course_status',
-			'number'  => 0,
-			'offset'  => 0,
-			'status'  => $exclude_completed ? 'in-progress' : 'any',
-		);
-
-		$users = WooThemes_Sensei_Utils::sensei_check_for_activity( $activity_args, true );
-
-		if ( ! is_array( $users ) ) {
-			$users = array( $users );
-		}
-
-		$total = count( $users );
+		$post_id           = $this->get_course_id();
+		$exclude_completed = $this->exclude_completed_participants( $post_id );
+		$user_ids          = $this->get_enrolled_participants_ids( $post_id, $exclude_completed );
 
 		// Don't run the query if there are no users taking this course.
-		if ( empty( $users ) ) {
+		if ( empty( $user_ids ) ) {
 			return false;
 		}
 
@@ -223,13 +221,7 @@ class Sensei_Course_Participants {
 			$orderby  = 'user_registered';
 		}
 
-		$user_ids = array();
-		foreach ( $users as $user ) {
-			$user_ids[] = absint( $user->user_id );
-		}
-
 		$args_array = array(
-			'number'  => $total,
 			'include' => $user_ids,
 			'orderby' => $orderby,
 			'order'   => $order,
@@ -272,6 +264,79 @@ class Sensei_Course_Participants {
 		$course_id = intval( $course_id );
 
 		return $course_id;
+	}
+
+	/**
+	 * Get enrolled participants IDs.
+	 * 
+	 * @since 2.0.1
+	 *
+	 * @param int  $course_id         Course ID.
+	 * @param bool $exclude_completed Flag if should exclude the completed participants.
+	 * @param bool $count             Flag we want to count (true) or get the user ids (false).
+	 * 
+	 * @return int[]|int
+	 */
+	private function get_enrolled_participants_ids( $course_id, $exclude_completed, $count = false ) {
+		if ( $this->use_legacy_enrolment_method() ) {
+			return $this->get_enrolled_participants_ids_legacy( $course_id, $exclude_completed, $count );
+		}
+
+		$user_ids = Sensei_Course_Enrolment::get_course_instance( $course_id )->get_enrolled_user_ids();
+
+		if ( $exclude_completed ) {
+			$user_ids = array_filter(
+				$user_ids,
+				function( $user_id ) use ($course_id) {
+					return ! Sensei_Utils::user_completed_course( $course_id, $user_id );
+				}
+			);
+		}
+
+		if ( $count ) {
+			return count( $user_ids );
+		}
+
+		return $user_ids;
+	}
+
+	/**
+	 * Get legacy enrolled participants IDs.
+	 *
+	 * @since 2.0.1
+	 *
+	 * @param int  $course_id         Course ID.
+	 * @param bool $exclude_completed Flag if should exclude the completed participants.
+	 * @param bool $count             Flag we want to count (true) or get the user ids (false).
+	 *
+	 * @return int[]|int
+	 */
+	private function get_enrolled_participants_ids_legacy( $course_id, $exclude_completed, $count = false ) {
+		$activity_args = array(
+			'post_id' => absint( $course_id ),
+			'type'    => 'sensei_course_status',
+			'count'   => $count,
+			'number'  => 0,
+			'offset'  => 0,
+			'status'  => $exclude_completed ? 'in-progress' : 'any',
+		);
+
+		$course_learners = Sensei_Utils::sensei_check_for_activity( $activity_args, ! $count );
+
+		if ( $count ) {
+			return $course_learners;
+		}
+
+		if ( ! is_array( $course_learners ) ) {
+			$course_learners = array( $course_learners );
+		}
+
+		$user_ids = array();
+		foreach ( $course_learners as $user ) {
+			$user_ids[] = absint( $user->user_id );
+		}
+
+		return $user_ids;
 	}
 
 	/**
