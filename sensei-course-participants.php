@@ -7,7 +7,7 @@
  * Author: Automattic
  * Author URI: https://automattic.com/
  * Requires at least: 4.1
- * Tested up to: 5.1
+ * Tested up to: 5.4
  * Requires PHP: 5.6
  * Text Domain: sensei-course-participants
  * Domain Path: /languages/
