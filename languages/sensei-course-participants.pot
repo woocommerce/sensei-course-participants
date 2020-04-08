@@ -1,4 +1,4 @@
-# Copyright (C) 2019 Sensei Course Participants
+# Copyright (C) 2020 Sensei Course Participants
 # This file is distributed under the same license as the Sensei Course Participants package.
 msgid ""
 msgstr ""
@@ -118,10 +118,10 @@ msgid_plural "learners"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-sensei-course-participants.php:306
+#: includes/class-sensei-course-participants.php:371
 msgid "View All"
 msgstr ""
 
-#: includes/class-sensei-course-participants.php:307
+#: includes/class-sensei-course-participants.php:372
 msgid "Close"
 msgstr ""
