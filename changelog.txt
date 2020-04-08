@@ -1,5 +1,9 @@
 *** Sensei Course Participants Changelog ***
 
+2020.04.08 - version 2.0.1
+* New: Add Hungarian translation - #49
+* Tweak: Change to get enrolled participants instead of in progress - #53
+
 2019.04.26 - version 2.0.0
 * New: Add dependency check for minimum Sensei (1.11.0) and PHP (5.6) versions - #31
 * New: Add `sensei_course_participants_profile_url` filter to customize participant profile URL in the widget - #36
