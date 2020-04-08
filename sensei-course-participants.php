@@ -1,13 +1,13 @@
 <?php
 /*
  * Plugin Name: Sensei Course Participants
- * Version: 2.0.0
+ * Version: 2.0.1
  * Plugin URI: https://woocommerce.com/products/sensei-course-participants/
  * Description: Increase course enrolments by showing site visitors just how popular your courses are.
  * Author: Automattic
  * Author URI: https://automattic.com/
  * Requires at least: 4.1
- * Tested up to: 5.1
+ * Tested up to: 5.4
  * Requires PHP: 5.6
  * Text Domain: sensei-course-participants
  * Domain Path: /languages/
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SENSEI_COURSE_PARTICIPANTS_VERSION', '2.0.0' );
+define( 'SENSEI_COURSE_PARTICIPANTS_VERSION', '2.0.1' );
 define( 'SENSEI_COURSE_PARTICIPANTS_PLUGIN_FILE', __FILE__ );
 define( 'SENSEI_COURSE_PARTICIPANTS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
