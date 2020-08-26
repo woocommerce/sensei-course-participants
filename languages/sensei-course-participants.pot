@@ -1,17 +1,38 @@
-# Copyright (C) 2020 Sensei Course Participants
-# This file is distributed under the same license as the Sensei Course Participants package.
+# Copyright (C) 2020 Automattic
+# This file is distributed under the same license as the Sensei Course Participants plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Sensei Course Participants\n"
+"Project-Id-Version: Sensei Course Participants 2.0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sensei-course-participants\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Basepath: ..\n"
-"X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: *.js\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"POT-Creation-Date: 2020-08-26T17:07:03+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Domain: sensei-course-participants\n"
+
+#. Plugin Name of the plugin
+msgid "Sensei Course Participants"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://woocommerce.com/products/sensei-course-participants/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Increase course enrolments by showing site visitors just how popular your courses are."
+msgstr ""
+
+#. Author of the plugin
+msgid "Automattic"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://automattic.com/"
+msgstr ""
 
 #. translators: %1$s is version of PHP that this plugin requires; %2$s is the version of PHP WordPress is running on.
 #: includes/class-sensei-course-participants-dependency-checker.php:91
