@@ -60,7 +60,7 @@ class Sensei_Course_Participants {
 		$this->_version      = SENSEI_COURSE_PARTICIPANTS_VERSION;
 		$this->_token        = 'sensei_course_participants';
 		$this->assets_dir    = trailingslashit( dirname( SENSEI_COURSE_PARTICIPANTS_PLUGIN_FILE ) ) . 'assets';
-		$this->assets_url    = esc_url( trailingslashit( plugins_url( '/assets/', SENSEI_COURSE_PARTICIPANTS_PLUGIN_FILE ) ) );
+		$this->assets_url    = esc_url( trailingslashit( plugins_url( '/assets/dist/', SENSEI_COURSE_PARTICIPANTS_PLUGIN_FILE ) ) );
 
 		$this->load_plugin_textdomain();
 
@@ -179,7 +179,7 @@ class Sensei_Course_Participants {
 	 * @since 2.0.1 Changed to count enrolled users instead of learners in progress.
 	 *
 	 * @param int $post_id Post ID.
-	 * 
+	 *
 	 * @return integer
 	 */
 	public function get_course_participant_count( $post_id = 0 ) {
@@ -197,7 +197,7 @@ class Sensei_Course_Participants {
 	 *
 	 * @since 1.0.0
 	 * @since 2.0.1 Changed to get enrolled users instead of learners in progress.
-	 * 
+	 *
 	 * @param  string $order    Order direction.
 	 * @param  string $orderby  How to determine the order of learners.
 	 *
@@ -268,13 +268,13 @@ class Sensei_Course_Participants {
 
 	/**
 	 * Get enrolled participants IDs.
-	 * 
+	 *
 	 * @since 2.0.1
 	 *
 	 * @param int  $course_id         Course ID.
 	 * @param bool $exclude_completed Flag if should exclude the completed participants.
 	 * @param bool $count             Flag we want to count (true) or get the user ids (false).
-	 * 
+	 *
 	 * @return int[]|int
 	 */
 	private function get_enrolled_participants_ids( $course_id, $exclude_completed, $count = false ) {

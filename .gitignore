@@ -1,2 +1,6 @@
-build
+.DS_Store
 node_modules
+vendor
+build
+assets/dist
+/*.zip
