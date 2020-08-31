@@ -6,9 +6,9 @@
  * Description: Increase course enrolments by showing site visitors just how popular your courses are.
  * Author: Automattic
  * Author URI: https://automattic.com/
- * Requires at least: 4.1
- * Tested up to: 5.4
- * Requires PHP: 5.6
+ * Requires at least: 5.2
+ * Tested up to: 5.5
+ * Requires PHP: 7.0
  * Text Domain: sensei-course-participants
  * Domain Path: /languages/
  * Woo: 435834:f6479a8a3a01ac11794f32be22b0682f
