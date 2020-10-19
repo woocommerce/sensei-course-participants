@@ -131,9 +131,14 @@ class Sensei_Course_Participants {
 		echo '<p class="sensei-course-participants">';
 
 		printf(
-			esc_html__( '%s %s taking this course', 'sensei-course-participants' ),
-			'<strong>' . intval( $learner_count ) . '</strong>',
-			esc_html( _n( 'learner', 'learners', intval( $learner_count ), 'sensei-course-participants' ) )
+			_n(
+				/* translators: %d is replaced with the number of learners in the course */
+				'<strong>%d</strong> learner taking this course',
+				'<strong>%d</strong> learners taking this course',
+				intval( $learner_count ),
+				'sensei-course-participants'
+			),
+			esc_html( intval( $learner_count ) )
 		);
 
 		echo "</p>\n";
