@@ -95,7 +95,7 @@ class Sensei_Course_Participants {
 
 
 		// Display course participants on course loop and single course
-		add_action( 'sensei_single_course_content_inside_before', array( $instance, 'display_course_participant_count' ), 15 );
+		add_filter( 'the_content', array( $instance, 'single_course_prepend_course_participant_count' ), 15 );
 		add_action( 'sensei_course_content_inside_before', array( $instance, 'display_course_participant_count' ), 15, 1 );
 
 		// Include Widget
@@ -142,6 +142,34 @@ class Sensei_Course_Participants {
 		);
 
 		echo "</p>\n";
+	}
+
+	/**
+	 * Prepend the course participant count to the content for the Single
+	 * Course page. To be used with the `the_content` filter.
+	 *
+	 * @access private
+	 * @since 2.0.2
+	 *
+	 * @param string $content The original post content.
+	 *
+	 * @return string The new post content with the course participants count prepended.
+	 */
+	public function single_course_prepend_course_participant_count( $content ) {
+		global $post;
+
+		if ( ! is_singular( 'course' ) ) {
+			return $content;
+		}
+
+		// Ensure that this is only done once on unsupported themes.
+		remove_filter( 'the_content', array( $this, 'single_course_prepend_course_participant_count' ), 15 );
+
+		ob_start();
+		$this->display_course_participant_count( $post );
+		$course_participants_content = ob_get_clean();
+
+		return $course_participants_content . "\n" . $content;
 	}
 
 	/**
