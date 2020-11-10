@@ -96,6 +96,7 @@ class Sensei_Course_Participants {
 
 		// Display course participants on course loop and single course
 		add_filter( 'the_content', array( $instance, 'single_course_prepend_course_participant_count' ), 15 );
+		add_action( 'sensei_single_course_content_inside_before', array( $instance, 'display_course_participant_count' ), 15 );
 		add_action( 'sensei_course_content_inside_before', array( $instance, 'display_course_participant_count' ), 15, 1 );
 
 		// Include Widget
@@ -112,36 +113,16 @@ class Sensei_Course_Participants {
 	public function display_course_participant_count( $post_item = 0 ) {
 		global $post, $wp_the_query;
 
+		// Do not use this method if we are prepending to `the_content`.
+		if ( $this->should_prepend_to_the_content() ) {
+			return;
+		}
+
 		if ( isset( $wp_the_query->queried_object->ID ) && 'page' === get_post_type( $wp_the_query->queried_object->ID ) ){
 			return;
 		}
 
-		if ( is_singular( 'course' ) ) {
-			$post_id = $post->ID;
-		} elseif ( isset( $post_item ) && is_object( $post_item ) ) {
-			$post_id = absint( $post_item->ID );
-		} elseif ( is_numeric( $post_item ) && $post_item > 0 ) {
-			$post_id = absint( $post_item );
-		} else {
-			return;
-		}
-
-		$learner_count = $this->get_course_participant_count( $post_id );
-
-		echo '<p class="sensei-course-participants">';
-
-		printf(
-			_n(
-				/* translators: %d is replaced with the number of learners in the course */
-				'<strong>%d</strong> learner taking this course',
-				'<strong>%d</strong> learners taking this course',
-				intval( $learner_count ),
-				'sensei-course-participants'
-			),
-			esc_html( intval( $learner_count ) )
-		);
-
-		echo "</p>\n";
+		echo $this->get_course_participant_count_html( $post_item );
 	}
 
 	/**
@@ -158,18 +139,82 @@ class Sensei_Course_Participants {
 	public function single_course_prepend_course_participant_count( $content ) {
 		global $post;
 
-		if ( ! is_singular( 'course' ) ) {
+		if ( ! $this->should_prepend_to_the_content() ) {
 			return $content;
 		}
 
 		// Ensure that this is only done once on unsupported themes.
 		remove_filter( 'the_content', array( $this, 'single_course_prepend_course_participant_count' ), 15 );
 
-		ob_start();
-		$this->display_course_participant_count( $post );
-		$course_participants_content = ob_get_clean();
+		$course_participants_content = $this->get_course_participant_count_html( $post );
 
 		return $course_participants_content . "\n" . $content;
+	}
+
+	/**
+	 * Get the HTML to display the course participant count.
+	 *
+	 * @since 2.0.2
+	 *
+	 * @param  WP_Post|int $post_item Post object or ID.
+	 * @return string
+	 */
+	private function get_course_participant_count_html( $post_item = 0 ) {
+		global $post;
+
+		if ( is_singular( 'course' ) ) {
+			$post_id = $post->ID;
+		} elseif ( isset( $post_item ) && is_object( $post_item ) ) {
+			$post_id = absint( $post_item->ID );
+		} elseif ( is_numeric( $post_item ) && $post_item > 0 ) {
+			$post_id = absint( $post_item );
+		} else {
+			return '';
+		}
+
+		$learner_count = $this->get_course_participant_count( $post_id );
+
+		$content = '<p class="sensei-course-participants">';
+
+		$content .= sprintf(
+			_n(
+				/* translators: %d is replaced with the number of learners in the course */
+				'<strong>%d</strong> learner taking this course',
+				'<strong>%d</strong> learners taking this course',
+				intval( $learner_count ),
+				'sensei-course-participants'
+			),
+			esc_html( intval( $learner_count ) )
+		);
+
+		$content .= "</p>\n";
+		return $content;
+	}
+
+	/**
+	 * Check whether we should prepend the participant count to the content
+	 * using the `the_content` filter instead of the custom hook within Sensei's
+	 * Single Course template.
+	 *
+	 * @since 2.0.2
+	 *
+	 * @return bool
+	 */
+	private function should_prepend_to_the_content() {
+		global $post;
+
+		$should_prepend_to_the_content = is_singular( 'course' ) && ! Sensei()->course->is_legacy_course( $post );
+
+		/**
+		 * Change whether the course participant count HTML should be prepended
+		 * to `the_content` rather than using Sensei's custom hooks.
+		 *
+		 * @since 2.0.2
+		 *
+		 * @param bool    $should_prepend_to_the_content Whether we should prepend the HTML to `the_content`.
+		 * @param WP_Post $post                          The current post.
+		 */
+		return apply_filters( 'sensei_course_participants_should_prepend_to_the_content', $should_prepend_to_the_content, $post );
 	}
 
 	/**
