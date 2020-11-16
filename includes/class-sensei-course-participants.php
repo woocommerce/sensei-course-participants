@@ -214,7 +214,7 @@ class Sensei_Course_Participants {
 		 * @param bool    $should_prepend_to_the_content Whether we should prepend the HTML to `the_content`.
 		 * @param WP_Post $post                          The current post.
 		 */
-		return apply_filters( 'sensei_course_participants_should_prepend_to_the_content', $should_prepend_to_the_content, $post );
+		return apply_filters( 'sensei_course_participants_prepend_to_the_content', $should_prepend_to_the_content, $post );
 	}
 
 	/**
