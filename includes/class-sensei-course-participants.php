@@ -203,7 +203,12 @@ class Sensei_Course_Participants {
 	private function should_prepend_to_the_content() {
 		global $post;
 
-		$should_prepend_to_the_content = is_singular( 'course' ) && ! Sensei()->course->is_legacy_course( $post );
+		$is_legacy_course = true;
+		if ( method_exists( Sensei()->course, 'is_legacy_course' ) ) {
+			$is_legacy_course = Sensei()->course->is_legacy_course( $post );
+		}
+
+		$should_prepend_to_the_content = is_singular( 'course' ) && ! $is_legacy_course;
 
 		/**
 		 * Change whether the course participant count HTML should be prepended
