@@ -1,6 +1,6 @@
 *** Sensei Course Participants Changelog ***
 
-2020.11.18 - version 2.0.2
+2020.11.19 - version 2.0.2
 
 * Tweak: Ensure course participants count displays on single course page that is not using Sensei custom template - #69, #70, #71
 * Tweak: Add missing translator comments - #66
