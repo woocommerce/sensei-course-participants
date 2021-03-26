@@ -96,7 +96,7 @@ class Sensei_Course_Participants {
 
 		// Display course participants on course loop and single course
 		add_filter( 'the_content', array( $instance, 'single_course_prepend_course_participant_count' ), 15 );
-		add_action( 'sensei_single_course_content_inside_before', array( $instance, 'display_course_participant_count' ), 15 );
+		add_action( 'sensei_single_course_content_inside_before', array( $instance, 'display_course_participant_count' ), 14 );
 		add_action( 'sensei_course_content_inside_before', array( $instance, 'display_course_participant_count' ), 15, 1 );
 
 		// Include Widget
