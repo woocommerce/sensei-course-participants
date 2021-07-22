@@ -1,5 +1,8 @@
 *** Sensei Course Participants Changelog ***
 
+2021.07.26 - version 2.0.3
+* Adds notice to warn users that this plugin is no longer maintained.
+
 2020.11.19 - version 2.0.2
 
 * Tweak: Ensure course participants count displays on single course page that is not using Sensei custom template - #69, #70, #71

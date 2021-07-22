@@ -1,9 +1,9 @@
 <?php
 /*
  * Plugin Name: Sensei Course Participants
- * Version: 2.0.2
+ * Version: 2.0.3
  * Plugin URI: https://woocommerce.com/products/sensei-course-participants/
- * Description: Increase course enrolments by showing site visitors just how popular your courses are.
+ * Description: Increase course enrolments by showing site visitors just how popular your courses are. This plugin is no longer maintained.
  * Author: Automattic
  * Author URI: https://automattic.com/
  * Requires at least: 5.4
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SENSEI_COURSE_PARTICIPANTS_VERSION', '2.0.2' );
+define( 'SENSEI_COURSE_PARTICIPANTS_VERSION', '2.0.3' );
 define( 'SENSEI_COURSE_PARTICIPANTS_PLUGIN_FILE', __FILE__ );
 define( 'SENSEI_COURSE_PARTICIPANTS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 

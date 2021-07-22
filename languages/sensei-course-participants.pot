@@ -1,17 +1,17 @@
-# Copyright (C) 2020 Automattic
+# Copyright (C) 2021 Automattic
 # This file is distributed under the same license as the Sensei Course Participants plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Sensei Course Participants 2.0.2\n"
+"Project-Id-Version: Sensei Course Participants 2.0.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sensei-course-participants\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-11-18T19:28:59+00:00\n"
+"POT-Creation-Date: 2021-07-22T19:07:07+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.5.0-alpha-75cb7e3\n"
+"X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: sensei-course-participants\n"
 
 #. Plugin Name of the plugin
@@ -23,7 +23,7 @@ msgid "https://woocommerce.com/products/sensei-course-participants/"
 msgstr ""
 
 #. Description of the plugin
-msgid "Increase course enrolments by showing site visitors just how popular your courses are."
+msgid "Increase course enrolments by showing site visitors just how popular your courses are. This plugin is no longer maintained."
 msgstr ""
 
 #. Author of the plugin
@@ -35,146 +35,119 @@ msgid "https://automattic.com/"
 msgstr ""
 
 #. translators: %1$s is version of PHP that this plugin requires; %2$s is the version of PHP WordPress is running on.
-#: build/sensei-course-participants/includes/class-sensei-course-participants-dependency-checker.php:91
 #: includes/class-sensei-course-participants-dependency-checker.php:91
 msgid "<strong>Sensei Course Participants</strong> requires a minimum PHP version of %1$s, but you are running %2$s."
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants-dependency-checker.php:101
 #: includes/class-sensei-course-participants-dependency-checker.php:101
 msgid "Learn more about updating PHP"
 msgstr ""
 
 #. translators: accessibility text
-#: build/sensei-course-participants/includes/class-sensei-course-participants-dependency-checker.php:103
 #: includes/class-sensei-course-participants-dependency-checker.php:103
 msgid "(opens in a new tab)"
 msgstr ""
 
 #. translators: %1$s is the minimum version number of Sensei that is required.
-#: build/sensei-course-participants/includes/class-sensei-course-participants-dependency-checker.php:122
 #: includes/class-sensei-course-participants-dependency-checker.php:122
 msgid "<strong>Sensei Course Participants</strong> requires that the plugin <strong>Sensei</strong> (minimum version: <strong>%1$s</strong>) is installed and activated."
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants-widget.php:58
 #: includes/class-sensei-course-participants-widget.php:58
 msgid "Displays a list of learners taking the current course, with links to their profiles (if public)."
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants-widget.php:60
 #: includes/class-sensei-course-participants-widget.php:60
 msgid "Sensei - Course Participants"
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants-widget.php:153
 #: includes/class-sensei-course-participants-widget.php:153
 msgid "There are no other learners currently taking this course. Be the first!"
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants-widget.php:176
 #: includes/class-sensei-course-participants-widget.php:176
 msgid "You"
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants-widget.php:201
 #: includes/class-sensei-course-participants-widget.php:201
 msgid "View public learner profile"
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants-widget.php:218
 #: includes/class-sensei-course-participants-widget.php:218
 msgid "View all"
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants-widget.php:280
 #: includes/class-sensei-course-participants-widget.php:280
 msgid "Title (optional):"
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants-widget.php:285
 #: includes/class-sensei-course-participants-widget.php:285
 msgid "Number of Learners (optional):"
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants-widget.php:290
 #: includes/class-sensei-course-participants-widget.php:290
 msgid "Image Size (in pixels):"
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants-widget.php:295
 #: includes/class-sensei-course-participants-widget.php:295
 msgid "Order By:"
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants-widget.php:304
 #: includes/class-sensei-course-participants-widget.php:304
 msgid "Order Direction:"
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants-widget.php:313
 #: includes/class-sensei-course-participants-widget.php:313
 msgid "Display:"
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants-widget.php:332
 #: includes/class-sensei-course-participants-widget.php:332
 msgid "Date Registered"
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants-widget.php:333
 #: includes/class-sensei-course-participants-widget.php:333
 msgid "Name"
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants-widget.php:334
 #: includes/class-sensei-course-participants-widget.php:334
 msgid "Random Order"
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants-widget.php:346
 #: includes/class-sensei-course-participants-widget.php:346
 msgid "Ascending"
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants-widget.php:347
 #: includes/class-sensei-course-participants-widget.php:347
 msgid "Descending"
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants-widget.php:359
 #: includes/class-sensei-course-participants-widget.php:359
 msgid "List"
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants-widget.php:360
 #: includes/class-sensei-course-participants-widget.php:360
 msgid "Grid"
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants.php:134
-msgid "%s %s taking this course"
+#: includes/class-sensei-course-participants.php:118
+msgid "This plugin is no longer being maintained."
 msgstr ""
 
-#: build/sensei-course-participants/includes/class-sensei-course-participants.php:136
-msgid "learner"
-msgid_plural "learners"
-msgstr[0] ""
-msgstr[1] ""
-
-#: build/sensei-course-participants/includes/class-sensei-course-participants.php:371
-#: includes/class-sensei-course-participants.php:454
-msgid "View All"
-msgstr ""
-
-#: build/sensei-course-participants/includes/class-sensei-course-participants.php:372
-#: includes/class-sensei-course-participants.php:455
-msgid "Close"
+#: includes/class-sensei-course-participants.php:119
+msgid "More information"
 msgstr ""
 
 #. translators: %d is replaced with the number of learners in the course
-#: includes/class-sensei-course-participants.php:180
+#: includes/class-sensei-course-participants.php:234
 msgid "<strong>%d</strong> learner taking this course"
 msgid_plural "<strong>%d</strong> learners taking this course"
 msgstr[0] ""
 msgstr[1] ""
+
+#: includes/class-sensei-course-participants.php:508
+msgid "View All"
+msgstr ""
+
+#: includes/class-sensei-course-participants.php:509
+msgid "Close"
+msgstr ""
