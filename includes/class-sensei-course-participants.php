@@ -66,6 +66,60 @@ class Sensei_Course_Participants {
 
 		register_activation_hook( SENSEI_COURSE_PARTICIPANTS_PLUGIN_FILE, array( $this, 'install' ) );
 
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_eol_style' ] );
+		add_action( 'after_plugin_row_' . SENSEI_COURSE_PARTICIPANTS_PLUGIN_BASENAME, [ $this, 'add_eol_message' ] );
+	}
+
+	/**
+	 * Add the custom styling to hide the box shadow of the plugin row.
+	 */
+	public function enqueue_eol_style() {
+		$screen = get_current_screen();
+
+		if ( ! $screen || ! in_array( $screen->id, [ 'plugins', 'plugins-network' ], true ) ) {
+			return;
+		}
+
+		wp_register_style( 'sensei-course-participants-eol-style', false );
+		wp_enqueue_style( 'sensei-course-participants-eol-style' );
+		wp_add_inline_style(
+			'sensei-course-participants-eol-style',
+			sprintf( '[data-plugin="%1$s"] td, [data-plugin="%1$s"] th { box-shadow: none!important;  }', SENSEI_COURSE_PARTICIPANTS_PLUGIN_BASENAME )
+		);
+	}
+
+	/**
+	 * Adds the end of maintenance message on the plugin listing.
+	 */
+	public function add_eol_message() {
+
+		if ( is_network_admin() ) {
+			$active_class = is_plugin_active_for_network( SENSEI_COURSE_PARTICIPANTS_PLUGIN_BASENAME ) ? ' active' : '';
+		} else {
+			$active_class = is_plugin_active( SENSEI_COURSE_PARTICIPANTS_PLUGIN_BASENAME ) ? ' active' : '';
+		}
+
+		/** @var WP_Plugins_List_Table $wp_list_table */
+		$wp_list_table = _get_list_table(
+			'WP_Plugins_List_Table',
+			array(
+				'screen' => get_current_screen(),
+			)
+		);
+
+		printf(
+			'<tr class="plugin-update-tr%s">' .
+			'<td colspan="%s" class="plugin-update colspanchange">' .
+			'<div class="notice inline notice-warning notice-alt"><p>',
+			$active_class,
+			esc_attr( $wp_list_table->get_column_count() )
+		);
+
+		echo esc_html__( 'This plugin is no longer being maintained.', 'sensei-course-participants' );
+		echo ' <a href="https://senseilms.com/2021/07/21/retiring-two-sensei-lms-extensions/" rel="noreferrer noopener">' . esc_html__( 'More information', 'sensei-course-participants' ) . '</a>';
+
+		echo '</p></div></td></tr>';
+
 	}
 
 	/**
