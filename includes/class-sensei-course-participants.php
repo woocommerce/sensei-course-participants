@@ -116,7 +116,7 @@ class Sensei_Course_Participants {
 		);
 
 		echo esc_html__( 'This plugin is no longer being maintained.', 'sensei-course-participants' );
-		echo ' <a href="https://senseilms.com/2021/07/21/retiring-two-sensei-lms-extensions/" rel="noreferrer noopener">' . esc_html__( 'More information', 'sensei-course-participants' ) . '</a>';
+		echo ' <a href="https://senseilms.com/2021/07/29/retiring-two-sensei-lms-extensions/" rel="noreferrer noopener">' . esc_html__( 'More information', 'sensei-course-participants' ) . '</a>';
 
 		echo '</p></div></td></tr>';
 
