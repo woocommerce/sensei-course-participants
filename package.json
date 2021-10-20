@@ -16,7 +16,7 @@
     "url": "https://github.com/woocommerce/sensei-course-participants/issues"
   },
   "devDependencies": {
-    "@wordpress/scripts": "13.0.3"
+    "@wordpress/scripts": "18.1.0"
   },
   "scripts": {
     "build": "npm run build:assets && npm run archive",
