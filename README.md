@@ -1,4 +1,4 @@
 sensei-course-participants
 ==========================
 
-Hi, I'm the Course Participants extension for Sensei.
+This extension has been [retired](https://senseilms.com/retiring-two-sensei-lms-extensions/) and is no longer being actively maintained.
